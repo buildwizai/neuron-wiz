@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, lazy, Suspense } from 'react'
+import { useEffect, useRef, useState, lazy, Suspense, useMemo } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDownload, faShareNodes, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import ExpandCollapseControls from './components/ExpandCollapseControls'
@@ -18,7 +18,6 @@ const ExportControls = lazy(() => import('./components/ExportControls'))
 const ShareControls = lazy(() => import('./components/ShareControls'))
 
 function App() {
-  // ...
   const expandLevelRef = useRef(2); // Track current expand level, default 2
   // State for mobile menu
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -37,6 +36,15 @@ function App() {
   const darkMode = useStore(state => state.darkMode);
   const toggleDarkMode = useStore(state => state.toggleDarkMode);
   const commitSha = import.meta.env.VITE_COMMIT_SHA || 'development';
+
+  // Sort filteredMindMaps alphabetically by title
+  const sortedMindMaps = useMemo(() => {
+    return [...filteredMindMaps].sort((a, b) => {
+      const titleA = (a.title || a.name || '').toLowerCase();
+      const titleB = (b.title || b.name || '').toLowerCase();
+      return titleA.localeCompare(titleB);
+    });
+  }, [filteredMindMaps]);
 
   // Initialize app data on component mount
   useEffect(() => {
@@ -143,7 +151,7 @@ function App() {
                 <>
                   {filteredMindMaps.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 w-full">
-                      {filteredMindMaps.map(mindMap => (
+                      {sortedMindMaps.map(mindMap => (
                         <Suspense key={mindMap.id} fallback={<LoadingFallback />}>
                           <MindMapCard
                             id={mindMap.id}
