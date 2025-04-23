@@ -174,44 +174,53 @@ export class ShardedSearchIndex {
       return [...this.allDocuments];
     }
 
-    // Search each shard and track performance
-    const resultsPerShard = [];
-    const shardTimes = [];
+    let combinedResults = [];
 
-    for (const shard of this.shards) {
-      const startTime = performance.now();
+    // Special case: No query but has tag filters
+    // Use the stored document collection instead of searching
+    if (!query.trim() && filterTags.length > 0) {
+      combinedResults = [...this.allDocuments];
+    }
+    else if (query.trim()) {
+      // We have a search query - search each shard and track performance
+      const resultsPerShard = [];
+      const shardTimes = [];
 
-      if (query.trim()) {
-        resultsPerShard.push(shard.search(query));
-      } else {
-        // If no query but we have tag filters, start with all docs in this shard
-        resultsPerShard.push(shard.toJSON().docs || []);
+      for (const shard of this.shards) {
+        const startTime = performance.now();
+        resultsPerShard.push(shard.search(query, searchOptions.searchOptions));
+        const endTime = performance.now();
+        shardTimes.push(endTime - startTime);
       }
 
-      const endTime = performance.now();
-      shardTimes.push(endTime - startTime);
+      // Store shard search times for metrics
+      this._lastShardSearchTimes = shardTimes;
+
+      // Merge results from all shards
+      resultsPerShard.forEach(shardResults => {
+        combinedResults = [...combinedResults, ...shardResults];
+      });
+
+      // Sort by score when we have search results
+      combinedResults.sort((a, b) => b.score - a.score);
     }
-
-    // Store shard search times for metrics
-    this._lastShardSearchTimes = shardTimes;
-
-    // Merge results from all shards
-    let combinedResults = [];
-    resultsPerShard.forEach(shardResults => {
-      combinedResults = [...combinedResults, ...shardResults];
-    });
 
     // Apply tag filtering if specified
     if (filterTags.length > 0) {
       combinedResults = combinedResults.filter(item => {
-        // For each result, check if it has ALL the selected tags
-        return filterTags.every(tag => item.tags && item.tags.includes(tag));
-      });
-    }
+        // Check if the item has tags property and it's an array
+        if (!item.tags || !Array.isArray(item.tags)) {
+          return false;
+        }
 
-    // Sort by score if it's a search query
-    if (query.trim()) {
-      combinedResults.sort((a, b) => b.score - a.score);
+        // For each result, check if it has ALL the selected tags
+        return filterTags.every(tag =>
+          // Case-insensitive comparison to make filtering more robust
+          item.tags.some(itemTag =>
+            itemTag.toLowerCase() === tag.toLowerCase()
+          )
+        );
+      });
     }
 
     return combinedResults;
