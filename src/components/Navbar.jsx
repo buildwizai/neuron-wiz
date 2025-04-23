@@ -22,7 +22,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white dark:bg-gray-800 shadow">
-      <div className="container mx-auto px-4 py-2 flex justify-between items-center">
+      <div className="container mx-auto px-4 py-2 flex flex-col sm:flex-row justify-between items-center">
         <a
           href="/"
           className="hover:opacity-90 transition-opacity flex items-center"
@@ -31,7 +31,7 @@ export default function Navbar() {
           <img
             src="/images/neuronwiz-logo.svg"
             alt="NeuronWiz Logo"
-            className="h-15"
+            className="h-10 sm:h-15 w-auto navbar-logo"
             width="240"
             height="60"
           />
