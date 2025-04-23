@@ -6,7 +6,6 @@ import { Routes, Route, useNavigate, useLocation, Link } from 'react-router-dom'
 import SearchBar from './components/SearchBar'
 import TagCloud from './components/TagCloud'
 import { useStore } from './utils/store'
-import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import './components/Sidebar.css'
 
@@ -175,11 +174,11 @@ function App() {
                     <div className="flex items-center space-x-2 sm:space-x-3 w-full sm:w-auto">
                       <Link to="/" aria-label="NeuronWiz Home" className="hover:opacity-90 transition-opacity">
                         <img
-                          src="/images/neuronwiz-logo.svg"
+                          src="/images/icon.svg"
                           alt="NeuronWiz Logo"
                           className="h-8 sm:h-10 w-auto navbar-logo"
-                          width="40"
-                          height="40"
+                          width="60"
+                          height="60"
                         />
                       </Link>
                       <h1 className="text-xl sm:text-2xl font-bold truncate">

@@ -7,7 +7,6 @@ import { useStore } from '../utils/store';
  */
 export default function Navbar() {
   const darkMode = useStore(state => state.darkMode);
-  const toggleDarkMode = useStore(state => state.toggleDarkMode);
 
   // Sync darkMode with Tailwind's dark class on <html>
   useEffect(() => {
