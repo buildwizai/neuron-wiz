@@ -3,6 +3,15 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faSearch } from '@fortawesome/free-solid-svg-icons';
 
+/**
+ * Sidebar component for navigation between different mind maps
+ *
+ * @param {Object} props - Component props
+ * @param {Array} props.mindMaps - List of available mind maps
+ * @param {string} props.currentMindMapId - ID of the currently selected mind map
+ * @param {Function} props.onSelectMindMap - Callback when a mind map is selected
+ * @returns {JSX.Element} - Sidebar component
+ */
 function Sidebar({ mindMaps, currentMindMapId, onSelectMindMap }) {
   const [collapsed, setCollapsed] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -26,9 +35,12 @@ function Sidebar({ mindMaps, currentMindMapId, onSelectMindMap }) {
 
   return (
     <aside
-      className={`transition-all duration-200 flex flex-col h-full min-h-screen z-20
+      className={`transition-all duration-200 flex flex-col h-full md:min-h-screen z-40 md:z-20
         ${collapsed ? 'w-12' : 'w-72'}
-        bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 shadow-sm`}
+        bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 shadow-sm
+        md:relative md:block md:left-0
+        fixed left-0 top-0 bottom-0`}
+      aria-label="Mind map navigation sidebar"
     >
       <button
         className="flex items-center justify-center w-10 h-10 mt-4 mb-2 mx-auto rounded-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 shadow focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all"
@@ -54,6 +66,7 @@ function Sidebar({ mindMaps, currentMindMapId, onSelectMindMap }) {
               placeholder="Search mindmaps..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              aria-label="Search mind maps"
             />
           </div>
 

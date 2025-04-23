@@ -34,9 +34,17 @@
     grid-template-columns: 1fr !important;
     gap: 1rem !important;
   }
-  .flex {
+  /* Modify flex to only affect containers, not buttons */
+  .flex:not(button) {
     flex-direction: column !important;
     gap: 0.5rem !important;
+  }
+  /* Ensure button content stays horizontal */
+  button {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
   .px-4, .py-4, .py-8 {
     padding-left: 0.5rem !important;
