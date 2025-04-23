@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useStore } from '../utils/store';
 
@@ -6,6 +6,7 @@ import { useStore } from '../utils/store';
  * TagCloud component displays and enables filtering by tags
  * Includes counters showing the number of mind maps for each tag
  * Highlights the most popular tags (those with the highest counts)
+ * Initially shows only top 10 tags with option to expand/collapse
  */
 const TagCloud = () => {
   const allTags = useStore(state => state.allTags);
@@ -13,9 +14,12 @@ const TagCloud = () => {
   const tagCounts = useStore(state => state.tagCounts);
   const toggleTag = useStore(state => state.toggleTag);
 
+  // State to track whether we're showing all tags or just the top 10
+  const [showAllTags, setShowAllTags] = useState(false);
+
   /**
    * Determine the most popular tags based on counts
-   * @type {Set<string>} Set containing the top 3 most popular tag names
+   * @type {Set<string>} Set containing the top 3 most popular tag names (for highlighting)
    */
   const topTags = useMemo(() => {
     // If no tags or counts available, return empty set
@@ -34,6 +38,38 @@ const TagCloud = () => {
 
     return new Set(topTagNames);
   }, [tagCounts, allTags]);
+
+  /**
+   * Get a sorted list of tags, optionally limited to the top N
+   * @returns {string[]} Array of tag names sorted by popularity
+   */
+  const getSortedTags = useMemo(() => {
+    if (!allTags.length || !Object.keys(tagCounts).length) {
+      return [];
+    }
+
+    // Create array of [tag, count] pairs and sort by count (descending)
+    return Object.entries(tagCounts)
+      .sort((a, b) => b[1] - a[1])
+      .map(([tag]) => tag);
+  }, [tagCounts, allTags]);
+
+  /**
+   * The list of tags to display - either all tags or just the top 10
+   */
+  const displayedTags = useMemo(() => {
+    if (showAllTags || getSortedTags.length <= 10) {
+      return getSortedTags;
+    }
+    return getSortedTags.slice(0, 10);
+  }, [getSortedTags, showAllTags]);
+
+  /**
+   * Toggle between showing all tags and showing just the top 10
+   */
+  const toggleShowAllTags = () => {
+    setShowAllTags(prev => !prev);
+  };
 
   // If no tags available, don't render component
   if (!allTags.length) return null;
@@ -57,8 +93,8 @@ const TagCloud = () => {
           </button>
         )}
 
-        {/* Display all available tags with counts */}
-        {allTags.map(tag => {
+        {/* Display tags with counts - either top 10 or all depending on state */}
+        {displayedTags.map(tag => {
           const isTopTag = topTags.has(tag);
 
           return (
@@ -69,7 +105,7 @@ const TagCloud = () => {
                 selectedTags.includes(tag)
                   ? 'bg-violet-600 text-white'
                   : isTopTag
-                    ? 'bg-gradient-to-r from-violet-100 to-purple-100 text-gray-800 border border-violet-300 dark:from-violet-900 dark:to-purple-900 dark:text-gray-200 dark:border-violet-700'
+                    ? 'bg-gradient-to-r from-teal-100 to-cyan-100 text-teal-900 border border-teal-300 dark:from-teal-900 dark:to-cyan-900 dark:text-teal-100 dark:border-teal-700'
                     : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
               } ${isTopTag ? 'font-medium' : ''}`}
               aria-pressed={selectedTags.includes(tag)}
@@ -80,7 +116,7 @@ const TagCloud = () => {
                 selectedTags.includes(tag)
                   ? 'bg-violet-500 text-white'
                   : isTopTag
-                    ? 'bg-violet-300 text-violet-800 dark:bg-violet-700 dark:text-violet-200'
+                    ? 'bg-teal-300 text-teal-800 dark:bg-teal-700 dark:text-teal-100'
                     : 'bg-gray-300 text-gray-700 dark:bg-gray-600 dark:text-gray-200'
               }`}>
                 {tagCounts[tag] || 0}
@@ -91,6 +127,17 @@ const TagCloud = () => {
             </button>
           );
         })}
+
+        {/* Show 'Show All'/'Collapse' toggle if there are more than 10 tags */}
+        {allTags.length > 10 && (
+          <button
+            onClick={toggleShowAllTags}
+            className="px-3 py-1 text-sm rounded-full transition-colors bg-violet-100 text-violet-800 dark:bg-violet-900 dark:text-violet-200 hover:bg-violet-200 dark:hover:bg-violet-800 border border-violet-300 dark:border-violet-700 font-medium ml-2"
+            aria-expanded={showAllTags}
+          >
+            {showAllTags ? 'Show less' : `Show all (${allTags.length})`}
+          </button>
+        )}
       </div>
 
       {/* Show active filters summary if any selected */}
