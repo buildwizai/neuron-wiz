@@ -22,8 +22,19 @@ export const useStore = create((set, get) => ({
   // UI state
   isLoading: true,
   loadingProgress: 0,
-  // Use system preference as default for dark mode
-  darkMode: window.matchMedia('(prefers-color-scheme: dark)').matches,
+  // Initialize darkMode from localStorage, fallback to system preference
+  darkMode: (() => {
+    const stored = localStorage.getItem('darkMode');
+    let initial;
+    if (stored !== null) {
+      initial = stored === 'true';
+      console.log('[store.js] darkMode loaded from localStorage:', initial);
+    } else {
+      initial = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      console.log('[store.js] darkMode loaded from system preference:', initial);
+    }
+    return initial;
+  })(),
   isSearchPerformanceVisible: false,
 
   // Toggle search performance visibility
@@ -173,5 +184,10 @@ export const useStore = create((set, get) => ({
   },
 
   // UI state controls
-  toggleDarkMode: () => set(state => ({ darkMode: !state.darkMode })),
+  toggleDarkMode: () => set(state => {
+    const newDarkMode = !state.darkMode;
+    localStorage.setItem('darkMode', newDarkMode);
+    console.log('[store.js] toggleDarkMode called. New darkMode:', newDarkMode, 'localStorage:', localStorage.getItem('darkMode'));
+    return { darkMode: newDarkMode };
+  }),
 }))

@@ -3,3 +3,7 @@
 .mm-toolbar img {
   display: inline;
 }
+
+.markmap {
+  --markmap-text-color: inherit !important;
+}

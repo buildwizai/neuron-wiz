@@ -1,3 +1,22 @@
+// Set dark mode as early as possible, before React renders
+(function() {
+  try {
+    const stored = localStorage.getItem('darkMode');
+    console.log('[main.jsx] Pre-React darkMode script. localStorage.darkMode =', stored);
+    if (stored === 'true') {
+      document.documentElement.classList.add('dark');
+      console.log('[main.jsx] <html> classList after add:', document.documentElement.className);
+    } else if (stored === 'false') {
+      document.documentElement.classList.remove('dark');
+      console.log('[main.jsx] <html> classList after remove:', document.documentElement.className);
+    } else {
+      console.log('[main.jsx] No darkMode in localStorage, not touching <html> class.');
+    }
+  } catch (e) {
+    console.log('[main.jsx] Error in pre-React darkMode script:', e);
+  }
+})();
+
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, HashRouter } from 'react-router-dom'

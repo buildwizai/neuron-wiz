@@ -22,7 +22,6 @@ export default function CustomMarkmap({ markdown, darkMode = false, onReady = nu
   const toolbarRef = useRef(null);
   const markmapRef = useRef(null);
   const transformerRef = useRef(null);
-  const [toolbarVisible, setToolbarVisible] = useState(true);
 
   // Initialize markmap instance
   useEffect(() => {
@@ -113,31 +112,15 @@ export default function CustomMarkmap({ markdown, darkMode = false, onReady = nu
     };
   }, [markdown, onReady]);
 
-  // Toggle toolbar visibility
-  const toggleToolbar = () => {
-    setToolbarVisible(!toolbarVisible);
-  };
 
   return (
     <div className="w-full h-[calc(100vh-12rem)] transition-all relative">
-      {/* Toolbar toggle button */}
-      <button
-        type="button"
-        onClick={toggleToolbar}
-        className="absolute top-2 right-2 z-10 bg-gray-200 dark:bg-gray-700 p-1 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-        aria-label={toolbarVisible ? 'Hide toolbar' : 'Show toolbar'}
-        title={toolbarVisible ? 'Hide toolbar' : 'Show toolbar'}
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-          <path fillRule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z" clipRule="evenodd" />
-        </svg>
-      </button>
 
-      {/* Toolbar container */}
+      {/* Toolbar container - always visible */}
       <div
         ref={toolbarRef}
-        className={`absolute top-10 right-2 z-10 transition-opacity ${toolbarVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        aria-hidden={!toolbarVisible}
+        className="absolute top-5 right-2 z-10 opacity-100 transition-opacity"
+        aria-hidden={false}
         data-testid="markmap-toolbar"
       />
 

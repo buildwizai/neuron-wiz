@@ -83,16 +83,22 @@ function App() {
         {/* Home page with mind map listings */}
         <Route path="/" element={
           <>
-            <section className="bg-white dark:bg-gray-800 shadow pb-8">
+            <section className="bg-white dark:bg-gray-800 shadow pb-4">
               <div className="container mx-auto px-4 py-8 flex flex-col items-center text-center">
-                <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-violet-600 via-violet-500 to-purple-600 inline-block text-transparent bg-clip-text mb-2">Neuron Wiz</h1>
-                <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">Explore, visualize, and connect the world of artificial intelligence through interactive mind maps.</p>
-                <div className="mb-6 w-full max-w-xl">
+              <img
+            src="/images/neuronwiz-logo.svg"
+            alt="NeuronWiz Logo"
+            className="h-25"
+            width="360"
+            height="100"
+          />
+                <p className="text-lg text-gray-700 dark:text-gray-300 mb-2">Explore, visualize, and connect the world of artificial intelligence through interactive mind maps.</p>
+                <div className="mb-4 w-full max-w-xl">
                   <SearchBar />
                 </div>
               </div>
             </section>
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 py-4">
               {/* Tag filtering */}
               <div className="mb-8">
                 <TagCloud />
