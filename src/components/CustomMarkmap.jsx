@@ -13,12 +13,11 @@ import 'markmap-toolbar/dist/style.css';
  *
  * @param {Object} props - Component props
  * @param {string} props.markdown - Markdown content to render
- * @param {boolean} [props.fullScreen] - Whether to render in fullscreen mode
  * @param {Function} [props.onReady] - Callback when markmap is initialized
  * @param {boolean} [props.darkMode] - Whether dark mode is enabled (not used for styling)
  * @returns {JSX.Element} - Rendered component
  */
-export default function CustomMarkmap({ markdown, fullScreen = false, onReady = null }) {
+export default function CustomMarkmap({ markdown, darkMode = false, onReady = null }) {
   const containerRef = useRef(null);
   const toolbarRef = useRef(null);
   const markmapRef = useRef(null);
@@ -120,7 +119,7 @@ export default function CustomMarkmap({ markdown, fullScreen = false, onReady = 
   };
 
   return (
-    <div className={`w-full transition-all relative ${fullScreen ? 'fixed inset-0 z-50' : 'h-[calc(100vh-12rem)]'}`}>
+    <div className="w-full h-[calc(100vh-12rem)] transition-all relative">
       {/* Toolbar toggle button */}
       <button
         type="button"
@@ -154,7 +153,6 @@ export default function CustomMarkmap({ markdown, fullScreen = false, onReady = 
 
 CustomMarkmap.propTypes = {
   markdown: PropTypes.string.isRequired,
-  fullScreen: PropTypes.bool,
   onReady: PropTypes.func,
-  darkMode: PropTypes.bool, // Kept for API compatibility but not used
+  darkMode: PropTypes.bool, // Kept for API compatibility but used for styling
 };

@@ -6,14 +6,14 @@ import CustomMarkmap from './CustomMarkmap';
  *
  * @param {Object} props - Component props
  * @param {string} props.markdown - Markdown content to render as mind map
- * @param {boolean} props.fullScreen - Whether the mind map is in full-screen mode
+ * @param {boolean} props.darkMode - Whether dark mode is enabled
  * @param {Function} props.onMarkmapReady - Callback when markmap is initialized
  */
-const MindMap = ({ markdown, fullScreen, onMarkmapReady }) => {
+const MindMap = ({ markdown, darkMode, onMarkmapReady }) => {
   return (
     <CustomMarkmap
       markdown={markdown}
-      fullScreen={fullScreen}
+      darkMode={darkMode}
       onReady={onMarkmapReady}
     />
   );
@@ -21,12 +21,12 @@ const MindMap = ({ markdown, fullScreen, onMarkmapReady }) => {
 
 MindMap.propTypes = {
   markdown: PropTypes.string.isRequired,
-  fullScreen: PropTypes.bool,
+  darkMode: PropTypes.bool,
   onMarkmapReady: PropTypes.func
 };
 
 MindMap.defaultProps = {
-  fullScreen: false,
+  darkMode: false,
   onMarkmapReady: null
 };
 

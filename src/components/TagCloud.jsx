@@ -66,9 +66,9 @@ const TagCloud = () => {
               onClick={() => toggleTag(tag)}
               className={`px-3 py-1 text-sm rounded-full transition-colors flex items-center gap-1.5 ${
                 selectedTags.includes(tag)
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-violet-600 text-white'
                   : isTopTag
-                    ? 'bg-gradient-to-r from-indigo-100 to-purple-100 text-gray-800 border border-indigo-300 dark:from-indigo-900 dark:to-purple-900 dark:text-gray-200 dark:border-indigo-700'
+                    ? 'bg-gradient-to-r from-violet-100 to-purple-100 text-gray-800 border border-violet-300 dark:from-violet-900 dark:to-purple-900 dark:text-gray-200 dark:border-violet-700'
                     : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
               } ${isTopTag ? 'font-medium' : ''}`}
               aria-pressed={selectedTags.includes(tag)}
@@ -77,9 +77,9 @@ const TagCloud = () => {
               <span>{tag}</span>
               <span className={`inline-flex items-center justify-center rounded-full text-xs px-1.5 min-w-[1.25rem] ${
                 selectedTags.includes(tag)
-                  ? 'bg-blue-500 text-white'
+                  ? 'bg-violet-500 text-white'
                   : isTopTag
-                    ? 'bg-indigo-300 text-indigo-800 dark:bg-indigo-700 dark:text-indigo-200'
+                    ? 'bg-violet-300 text-violet-800 dark:bg-violet-700 dark:text-violet-200'
                     : 'bg-gray-300 text-gray-700 dark:bg-gray-600 dark:text-gray-200'
               }`}>
                 {tagCounts[tag] || 0}

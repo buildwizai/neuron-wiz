@@ -22,7 +22,6 @@ export const useStore = create((set, get) => ({
   // UI state
   isLoading: true,
   loadingProgress: 0,
-  fullScreen: false,
   // Use system preference as default for dark mode
   darkMode: window.matchMedia('(prefers-color-scheme: dark)').matches,
   isSearchPerformanceVisible: false,
@@ -174,7 +173,5 @@ export const useStore = create((set, get) => ({
   },
 
   // UI state controls
-  toggleFullScreen: () => set(state => ({ fullScreen: !state.fullScreen })),
-  exitFullScreen: () => set({ fullScreen: false }),
   toggleDarkMode: () => set(state => ({ darkMode: !state.darkMode })),
 }))
