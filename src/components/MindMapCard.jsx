@@ -7,10 +7,12 @@ import { useStore } from '../utils/store';
  *
  * @param {Object} props - Component props
  * @param {string} props.id - Mind map ID
+ * @param {string} props.title - Mind map title
  * @param {string} props.description - Mind map description
  * @param {Array} props.tags - Mind map tags
+ * @param {string} props.created - Mind map creation date in ISO format
  */
-const MindMapCard = ({ id, description, tags = [] }) => {
+const MindMapCard = ({ id, title, description, tags = [], created }) => {
   const toggleTag = useStore(state => state.toggleTag);
   const selectedTags = useStore(state => state.selectedTags);
 
@@ -19,15 +21,35 @@ const MindMapCard = ({ id, description, tags = [] }) => {
     toggleTag(tag);
   };
 
+  /**
+   * Format the ISO date string to a more readable format
+   * @param {string} dateString - ISO date string
+   * @returns {string} - Formatted date string
+   */
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return date.toLocaleDateString(undefined, options);
+  };
+
   return (
     <Link
       to={`/view/${id}`}
-      className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col"
-      aria-label={`Open mind map`}
+      className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col hover:translate-y-[-4px]"
+      aria-label={`Open mind map: ${title || ''}`}
     >
+      {/* Card header with gradient background */}
+      <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-4">
+        <h2 className="text-white font-bold text-lg line-clamp-2" title={title}>
+          {title}
+        </h2>
+      </div>
+
       {/* Content */}
       <div className="p-4 flex-1 flex flex-col">
-        <p className="text-gray-600 dark:text-gray-300 mb-4 flex-1">
+        <p className="text-gray-600 dark:text-gray-300 mb-4 flex-1 line-clamp-3">
           {description}
         </p>
 
@@ -49,6 +71,16 @@ const MindMapCard = ({ id, description, tags = [] }) => {
             ))}
           </div>
         )}
+
+        {/* Card footer with date */}
+        {created && (
+          <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <span>Created {formatDate(created)}</span>
+          </div>
+        )}
       </div>
     </Link>
   );
@@ -56,8 +88,10 @@ const MindMapCard = ({ id, description, tags = [] }) => {
 
 MindMapCard.propTypes = {
   id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string),
+  created: PropTypes.string,
 };
 
 export default MindMapCard;
