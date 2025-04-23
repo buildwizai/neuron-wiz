@@ -38,7 +38,7 @@ export default function CustomMarkmap({ markdown, darkMode = false, onReady = nu
     try {
       // Create SVG element for markmap
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.setAttribute('class', 'w-full h-full markmap');
+      svg.setAttribute('class', 'w-full h-full min-h-screen markmap');
 
       // Clear container and append SVG
       while (containerRef.current.firstChild) {

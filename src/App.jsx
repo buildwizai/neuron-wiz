@@ -1,5 +1,7 @@
 import { useEffect, useRef, lazy, Suspense } from 'react'
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDownload, faShareNodes, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { Routes, Route, useNavigate, useLocation, Link } from 'react-router-dom'
 import SearchBar from './components/SearchBar'
 import TagCloud from './components/TagCloud'
 import { useStore } from './utils/store'
@@ -9,6 +11,7 @@ import Navbar from './components/Navbar'
 const MindMapCard = lazy(() => import('./components/MindMapCard'))
 const MindMap = lazy(() => import('./components/MindMap'))
 const ExportControls = lazy(() => import('./components/ExportControls'))
+const ShareControls = lazy(() => import('./components/ShareControls'))
 
 function App() {
   const navigate = useNavigate();
@@ -77,7 +80,7 @@ function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
-      <Navbar />
+      {!location.pathname.startsWith('/view/') && <Navbar />}
       <main className="flex-1">
         <Routes>
         {/* Home page with mind map listings */}
@@ -151,22 +154,48 @@ function App() {
           <Suspense fallback={<LoadingFallback />}>
             <>
               <header className="bg-white shadow dark:bg-gray-800">
-                <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-                  <h1 className="text-2xl font-bold truncate">
-                    {currentMindMap?.title || 'Loading...'}
-                  </h1>
-                  <div className="flex items-center space-x-4">
-                    {currentMindMap && markmapRef.current && (
-                      <ExportControls
-                        markmapRef={markmapRef}
-                        title={currentMindMap.title}
-                        markdown={currentMindMap.content}
+                <div className="container mx-auto px-2 py-2 flex justify-between items-center">
+                  <div className="flex items-center space-x-3">
+                    <Link to="/" aria-label="NeuronWiz Home" className="hover:opacity-90 transition-opacity">
+                      <img
+                        src="/images/neuronwiz-logo.svg"
+                        alt="NeuronWiz Logo"
+                        className="h-10 w-auto"
+                        width="40"
+                        height="40"
                       />
+                    </Link>
+                    <h1 className="text-2xl font-bold truncate">
+                      {currentMindMap?.title || 'Loading...'}
+                    </h1>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    {currentMindMap && (
+                      <>
+                          <ExportControls
+                            markmapRef={markmapRef}
+                            title={currentMindMap.title}
+                            markdown={currentMindMap.content}
+                            buttonIcon={
+                              <FontAwesomeIcon icon={faDownload} className="h-4 w-4 mr-1" />
+                            }
+                          />
+                        <ShareControls
+                          url={window.location.href}
+                          title={currentMindMap.title}
+                          description={currentMindMap.description}
+                          buttonIcon={
+                            <FontAwesomeIcon icon={faShareNodes} className="h-4 w-4 mr-1" />
+                          }
+                        />
+                      </>
                     )}
                     <button
                       onClick={() => navigate('/')}
-                      className="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                      className="px-3 py-1 flex items-center bg-gray-200 text-gray-700 rounded hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                      aria-label="Back to Home"
                     >
+                      <FontAwesomeIcon icon={faArrowLeft} className="h-4 w-4 mr-1" />
                       Back to Home
                     </button>
                   </div>
@@ -192,17 +221,19 @@ function App() {
         } />
       </Routes>
       </main>
-      <footer className="bg-gradient-to-r from-gray-100 via-violet-50 to-purple-100 dark:from-gray-900 dark:via-violet-900 dark:to-purple-900 shadow">
-        <div className="container mx-auto px-4 py-6 text-sm text-gray-600 dark:text-gray-400 flex flex-col md:flex-row justify-between items-center gap-2">
-          <div className="flex flex-col md:flex-row items-center gap-2">
-            <p className="font-semibold">Build Wiz AI &copy; 2025</p>
+      {!location.pathname.startsWith('/view/') && (
+        <footer className="bg-gradient-to-r from-gray-100 via-violet-50 to-purple-100 dark:from-gray-900 dark:via-violet-900 dark:to-purple-900 shadow">
+          <div className="container mx-auto px-4 py-6 text-sm text-gray-600 dark:text-gray-400 flex flex-col md:flex-row justify-between items-center gap-2">
+            <div className="flex flex-col md:flex-row items-center gap-2">
+              <p className="font-semibold">Build Wiz AI &copy; 2025</p>
+            </div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 text-center md:text-right mt-2 md:mt-0">
+              <p>Open source project for interactive AI mind maps. <a href="https://github.com/buildwizai/neuron-wiz" target="_blank" rel="noopener noreferrer" className="underline hover:text-violet-500">View on GitHub</a></p>
+              <p className="mt-1">Build: {commitSha.substring(0, 7)}</p>
+            </div>
           </div>
-          <div className="text-xs text-gray-500 dark:text-gray-400 text-center md:text-right mt-2 md:mt-0">
-            <p>Open source project for interactive AI mind maps. <a href="https://github.com/buildwizai/neuron-wiz" target="_blank" rel="noopener noreferrer" className="underline hover:text-violet-500">View on GitHub</a></p>
-            <p className="mt-1">Build: {commitSha.substring(0, 7)}</p>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      )}
     </div>
   )
 }

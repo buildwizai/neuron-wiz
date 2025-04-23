@@ -1,12 +1,11 @@
-# Neuron Wiz 🧠
+![Neuron Wiz](public/images/neuronwiz-logo.svg)
 
-![Neuron Wiz](screenshot.png)
+**Explore, visualize, and connect the world of artificial intelligence through interactive mind maps.**
 
-**Transform your knowledge into interactive visual mind maps**
 
 Neuron Wiz turns your ideas, notes, and knowledge into beautiful, interactive mind maps that can be easily shared, searched, and explored. Perfect for visual learners, educators, researchers, and anyone who wants to organize information in a more intuitive way.
 
-![Neuron Wiz Mind Map Example](https://neuronwiz.buildwizai.com)
+![Neuron Wiz](public/images/screenshot.png)
 
 ## ✨ Why Use Neuron Wiz?
 

@@ -10,7 +10,7 @@ import sanitizeHtml from 'sanitize-html';
  * @param {string} props.title - Title of the mind map
  * @param {string} props.markdown - Original markdown content for export
  */
-const ExportControls = ({ markmapRef, title, markdown }) => {
+const ExportControls = ({ markmapRef, title, markdown, buttonIcon }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   /**
@@ -335,9 +335,11 @@ const ExportControls = ({ markmapRef, title, markdown }) => {
         aria-label="Export mind map"
         data-testid="export-dropdown-button"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-        </svg>
+        {buttonIcon ? buttonIcon : (
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+        )}
         Export
       </button>
 
@@ -383,7 +385,8 @@ ExportControls.propTypes = {
     current: PropTypes.object
   }).isRequired,
   title: PropTypes.string.isRequired,
-  markdown: PropTypes.string.isRequired
+  markdown: PropTypes.string.isRequired,
+  buttonIcon: PropTypes.node,
 };
 
 export default ExportControls;
