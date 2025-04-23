@@ -223,8 +223,8 @@ function App() {
                     </div>
 
                     {/* Desktop header layout - single row with all elements */}
-                    <div className="hidden sm:flex sm:flex-row sm:justify-between sm:items-center sm:w-full">
-                      <div className="flex items-center space-x-2 sm:space-x-3">
+                    <div className="hidden sm:flex sm:flex-row sm:items-center sm:w-full">
+                      <div className="flex flex-shrink-0 items-center space-x-2 sm:space-x-3 mr-2">
                         <Link to="/" aria-label="NeuronWiz Home" className="hover:opacity-90 transition-opacity">
                           <img
                             src="/images/icon.svg"
@@ -234,60 +234,51 @@ function App() {
                             height="60"
                           />
                         </Link>
-                        <h1 className="text-xl sm:text-2xl font-bold truncate">
+                        <h1 className="text-lg sm:text-xl md:text-2xl font-bold truncate max-w-[200px] md:max-w-sm lg:max-w-md">
                           {currentMindMap?.title || 'Loading...'}
                         </h1>
                       </div>
 
                       {/* Desktop action buttons */}
-                      <div className="flex flex-row flex-wrap items-stretch gap-2 md:gap-4 justify-end">
+                      <div className="flex flex-row items-center gap-1 sm:gap-2 ml-auto">
                         {currentMindMap && (
                           <>
-                            <div className="flex-initial">
-                              <ExportControls
-                                markmapRef={markmapRef}
-                                title={currentMindMap.title}
-                                markdown={currentMindMap.content}
-                                buttonIcon={
-                                  <FontAwesomeIcon icon={faDownload} className="h-4 w-4 mr-1" />
+                            <ExportControls
+                              markmapRef={markmapRef}
+                              title={currentMindMap.title}
+                              markdown={currentMindMap.content}
+                              buttonIcon={
+                                <FontAwesomeIcon icon={faDownload} className="h-4 w-4 mr-1" />
+                              }
+                            />
+                            <ShareControls
+                              url={window.location.href}
+                              title={currentMindMap.title}
+                              description={currentMindMap.description}
+                              buttonIcon={
+                                <FontAwesomeIcon icon={faShareNodes} className="h-4 w-4 mr-1" />
+                              }
+                            />
+                            <ExpandCollapseControls
+                              onCollapseAll={() => {
+                                if (markmapRef.current && markmapRef.root) {
+                                  expandLevelRef.current = 1;
+                                  markmapRef.current.setOptions({ initialExpandLevel: 1 });
+                                  markmapRef.current.setData(markmapRef.root);
+                                  markmapRef.current.fit();
                                 }
-                              />
-                            </div>
-                            <div className="flex-initial">
-                              <ShareControls
-                                url={window.location.href}
-                                title={currentMindMap.title}
-                                description={currentMindMap.description}
-                                buttonIcon={
-                                  <FontAwesomeIcon icon={faShareNodes} className="h-4 w-4 mr-1" />
-                                }
-                              />
-                            </div>
-                            <div className="flex-initial">
-                              <ExpandCollapseControls
-                                onCollapseAll={() => {
-                                  if (markmapRef.current && markmapRef.root) {
-                                    expandLevelRef.current = 1;
-                                    markmapRef.current.setOptions({ initialExpandLevel: 1 });
-                                    markmapRef.current.setData(markmapRef.root);
-                                    markmapRef.current.fit();
-                                  }
-                                }}
-                              />
-                            </div>
+                              }}
+                            />
+                            <button
+                              onClick={() => navigate('/')}
+                              className="hidden lg:flex px-3 py-1 items-center bg-gray-200 text-gray-700 rounded hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                              aria-label="Back to Home"
+                            >
+                              <FontAwesomeIcon icon={faArrowLeft} className="h-4 w-4 mr-1" />
+                              <span>Back to Home</span>
+                            </button>
                           </>
                         )}
-                        <div className="flex-initial">
-                          <button
-                            onClick={() => navigate('/')}
-                            className="px-3 py-1 w-full sm:w-auto flex items-center bg-gray-200 text-gray-700 rounded hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
-                            aria-label="Back to Home"
-                          >
-                            <FontAwesomeIcon icon={faArrowLeft} className="h-4 w-4 mr-1" />
-                            <span className="hidden xs:inline">Back to Home</span>
-                            <span className="inline xs:hidden">Back</span>
-                          </button>
-                        </div>
                       </div>
                     </div>
 
