@@ -10,6 +10,7 @@ export const useStore = create((set, get) => ({
   mindMaps: [],
   filteredMindMaps: [],
   allTags: [],
+  tagCounts: {}, // Added tag counts object
   currentMindMap: null,
 
   // Search state
@@ -59,9 +60,19 @@ export const useStore = create((set, get) => ({
       // Extract all tags for filtering
       const tags = extractAllTags(data);
 
+      // Calculate tag counts
+      const tagCounts = {};
+      tags.forEach(tag => {
+        tagCounts[tag] = data.filter(mindMap =>
+          mindMap.tags && Array.isArray(mindMap.tags) &&
+          mindMap.tags.some(t => t.toLowerCase() === tag.toLowerCase())
+        ).length;
+      });
+
       set({
         searchIndex,
         allTags: tags,
+        tagCounts,
         isLoading: false,
         loadingProgress: 100
       });
@@ -81,10 +92,17 @@ export const useStore = create((set, get) => ({
         }
       ];
 
+      // Calculate tag counts for sample data
+      const tagCounts = {
+        sample: 1,
+        development: 1
+      };
+
       set({
         mindMaps: sampleData,
         filteredMindMaps: sampleData,
         allTags: ['sample', 'development'],
+        tagCounts,
         isLoading: false
       });
 
