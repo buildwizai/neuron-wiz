@@ -7,6 +7,8 @@ import SearchBar from './components/SearchBar'
 import TagCloud from './components/TagCloud'
 import { useStore } from './utils/store'
 import Navbar from './components/Navbar'
+import Sidebar from './components/Sidebar'
+import './components/Sidebar.css'
 
 // Lazy load components to reduce initial bundle size
 const MindMapCard = lazy(() => import('./components/MindMapCard'))
@@ -158,27 +160,36 @@ function App() {
         {/* Mind map view page */}
         <Route path="/view/:id" element={
           <Suspense fallback={<LoadingFallback />}>
-            <>
-              <header className="bg-white shadow dark:bg-gray-800">
-                <div className="container mx-auto px-2 py-2 flex flex-col sm:flex-row justify-between items-center gap-2">
-                  <div className="flex items-center space-x-2 sm:space-x-3 w-full sm:w-auto">
-                    <Link to="/" aria-label="NeuronWiz Home" className="hover:opacity-90 transition-opacity">
-                      <img
-                        src="/images/neuronwiz-logo.svg"
-                        alt="NeuronWiz Logo"
-                        className="h-8 sm:h-10 w-auto navbar-logo"
-                        width="40"
-                        height="40"
-                      />
-                    </Link>
-                    <h1 className="text-xl sm:text-2xl font-bold truncate">
-                      {currentMindMap?.title || 'Loading...'}
-                    </h1>
-                  </div>
-                  {/* Burger button for mobile */}
-                  <div className="sm:hidden flex w-full justify-end mb-2">
-                    <button
-                      onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            <div className="flex flex-row min-h-screen bg-gray-50 dark:bg-gray-900">
+              {/* Sidebar for mindmap switching */}
+              <Sidebar
+                mindMaps={mindMaps}
+                currentMindMapId={currentMindMap?.id}
+                onSelectMindMap={id => {
+                  if (id !== currentMindMap?.id) navigate(`/view/${id}`);
+                }}
+              />
+              <div className="flex-1 flex flex-col min-h-screen">
+                <header className="bg-white shadow dark:bg-gray-800">
+                  <div className="container mx-auto px-2 py-2 flex flex-col sm:flex-row justify-between items-center gap-2">
+                    <div className="flex items-center space-x-2 sm:space-x-3 w-full sm:w-auto">
+                      <Link to="/" aria-label="NeuronWiz Home" className="hover:opacity-90 transition-opacity">
+                        <img
+                          src="/images/neuronwiz-logo.svg"
+                          alt="NeuronWiz Logo"
+                          className="h-8 sm:h-10 w-auto navbar-logo"
+                          width="40"
+                          height="40"
+                        />
+                      </Link>
+                      <h1 className="text-xl sm:text-2xl font-bold truncate">
+                        {currentMindMap?.title || 'Loading...'}
+                      </h1>
+                    </div>
+                    {/* Burger button for mobile */}
+                    <div className="sm:hidden flex w-full justify-end mb-2">
+                      <button
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                       className="p-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 focus:outline-none"
                       aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
                     >
@@ -300,21 +311,22 @@ function App() {
                 </div>
               </header>
               <main className="flex-1">
-                {currentMindMap ? (
-                  <div className="relative">
-                    <MindMap
-                      markdown={currentMindMap.content}
-                      onMarkmapReady={handleMarkmapReady}
-                      darkMode={darkMode}
-                    />
-                  </div>
-                ) : (
-                  <div className="flex justify-center items-center h-64">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-600 dark:border-violet-400"></div>
-                  </div>
-                )}
-              </main>
-            </>
+                  {currentMindMap ? (
+                    <div className="relative">
+                      <MindMap
+                        markdown={currentMindMap.content}
+                        onMarkmapReady={handleMarkmapReady}
+                        darkMode={darkMode}
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex justify-center items-center h-64">
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-600 dark:border-violet-400"></div>
+                    </div>
+                  )}
+                </main>
+              </div>
+            </div>
           </Suspense>
         } />
       </Routes>
@@ -333,7 +345,7 @@ function App() {
         </footer>
       )}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

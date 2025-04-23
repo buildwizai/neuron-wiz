@@ -1,0 +1,52 @@
+.sidebar {
+  width: 220px;
+  background: var(--sidebar-bg, #f7f7f7);
+  border-right: 1px solid #ddd;
+  transition: width 0.2s cubic-bezier(.4,0,.2,1);
+  overflow: hidden;
+  position: relative;
+  min-height: 100vh;
+  z-index: 2;
+}
+.sidebar.collapsed {
+  width: 36px;
+}
+.sidebar-toggle {
+  position: absolute;
+  top: 8px;
+  right: -16px;
+  width: 32px;
+  height: 32px;
+  background: var(--sidebar-bg, #f7f7f7);
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+.sidebar-content {
+  padding: 16px 8px 8px 16px;
+}
+.sidebar-content h3 {
+  margin-top: 0;
+  font-size: 1.1em;
+  font-weight: 600;
+}
+.mindmap-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.mindmap-list li {
+  padding: 8px 10px;
+  margin-bottom: 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.mindmap-list li.active, .mindmap-list li:hover {
+  background: var(--sidebar-active, #e0e7ff);
+  color: #1d1d1d;
+}
