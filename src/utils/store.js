@@ -55,7 +55,29 @@ export const useStore = create((set, get) => ({
 
       set({ loadingProgress: 30 });
 
-      const data = await response.json();
+      // Fetch and normalize mind map data
+      let data = await response.json();
+
+      // Normalize all tags to lowercase and remove duplicates
+      data = data.map(mindMap => {
+        if (mindMap.tags && Array.isArray(mindMap.tags)) {
+          // Convert tags to lowercase and remove duplicates
+          const normalizedTagsSet = new Set();
+          mindMap.tags.forEach(tag => {
+            if (tag && typeof tag === 'string') {
+              normalizedTagsSet.add(tag.toLowerCase());
+            }
+          });
+
+          // Update the mindMap with normalized tags
+          return {
+            ...mindMap,
+            tags: Array.from(normalizedTagsSet)
+          };
+        }
+        return mindMap;
+      });
+
       set({ mindMaps: data, filteredMindMaps: data });
 
       set({ loadingProgress: 50 });
@@ -67,7 +89,7 @@ export const useStore = create((set, get) => ({
 
       set({ loadingProgress: 80 });
 
-      // Extract all tags for filtering
+      // Extract all tags for filtering - now handled by extractAllTags function
       const tags = extractAllTags(data);
 
       // Calculate tag counts
@@ -75,7 +97,7 @@ export const useStore = create((set, get) => ({
       tags.forEach(tag => {
         tagCounts[tag] = data.filter(mindMap =>
           mindMap.tags && Array.isArray(mindMap.tags) &&
-          mindMap.tags.some(t => t.toLowerCase() === tag.toLowerCase())
+          mindMap.tags.includes(tag)
         ).length;
       });
 
@@ -97,21 +119,37 @@ export const useStore = create((set, get) => ({
           description: 'This is a sample mind map for development purposes.',
           tags: ['sample', 'development'],
           url: '/view/sample-mind-map',
-
           content: '# Sample Mind Map\n## Topic 1\n### Subtopic 1.1\n### Subtopic 1.2\n## Topic 2\n### Subtopic 2.1'
         }
       ];
 
+      // Normalize sample data tags
+      sampleData.forEach(item => {
+        if (item.tags && Array.isArray(item.tags)) {
+          const normalizedTagsSet = new Set();
+          item.tags.forEach(tag => {
+            if (tag && typeof tag === 'string') {
+              normalizedTagsSet.add(tag.toLowerCase());
+            }
+          });
+          item.tags = Array.from(normalizedTagsSet);
+        }
+      });
+
       // Calculate tag counts for sample data
-      const tagCounts = {
-        sample: 1,
-        development: 1
-      };
+      const tagCounts = {};
+      const allTags = extractAllTags(sampleData);
+      allTags.forEach(tag => {
+        tagCounts[tag] = sampleData.filter(mindMap =>
+          mindMap.tags && Array.isArray(mindMap.tags) &&
+          mindMap.tags.includes(tag)
+        ).length;
+      });
 
       set({
         mindMaps: sampleData,
         filteredMindMaps: sampleData,
-        allTags: ['sample', 'development'],
+        allTags,
         tagCounts,
         isLoading: false
       });
@@ -167,10 +205,13 @@ export const useStore = create((set, get) => ({
     if (clearAll) {
       set({ selectedTags: [] });
     } else {
+      // Normalize tag to lowercase if it's a string
+      const normalizedTag = tag && typeof tag === 'string' ? tag.toLowerCase() : tag;
       const { selectedTags } = get();
-      const newTags = selectedTags.includes(tag)
-        ? selectedTags.filter(t => t !== tag)
-        : [...selectedTags, tag];
+
+      const newTags = selectedTags.includes(normalizedTag)
+        ? selectedTags.filter(t => t !== normalizedTag)
+        : [...selectedTags, normalizedTag];
 
       set({ selectedTags: newTags });
     }

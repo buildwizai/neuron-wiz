@@ -241,19 +241,24 @@ export const createShardedSearchIndex = async (shardSize = 200) => {
 /**
  * Extract all unique tags from documents
  * @param {Array} documents - Array of documents
- * @returns {Array} - Array of unique tags
+ * @returns {Array} - Array of unique lowercase tags with duplicates removed
  */
 export const extractAllTags = (documents) => {
-  const allTags = [];
+  const allTagsSet = new Set();
 
   documents.forEach(doc => {
     if (doc.tags && Array.isArray(doc.tags)) {
-      allTags.push(...doc.tags);
+      // Convert each tag to lowercase and add to Set to eliminate duplicates
+      doc.tags.forEach(tag => {
+        if (tag && typeof tag === 'string') {
+          allTagsSet.add(tag.toLowerCase());
+        }
+      });
     }
   });
 
-  // Remove duplicates
-  return [...new Set(allTags)];
+  // Convert Set back to Array
+  return Array.from(allTagsSet);
 };
 
 /**
