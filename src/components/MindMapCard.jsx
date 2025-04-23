@@ -37,25 +37,25 @@ const MindMapCard = ({ id, title, description, tags = [], created }) => {
   return (
     <Link
       to={`/view/${id}`}
-      className="mindmap-card bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col hover:translate-y-[-4px] w-full max-w-full sm:max-w-xs"
+      className="mindmap-card bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col hover:translate-y-[-4px] w-full h-full"
       aria-label={`Open mind map: ${title || ''}`}
     >
       {/* Card header with gradient background */}
-      <div className="bg-gradient-to-r from-violet-600 to-purple-700 p-4 sm:p-4">
+      <div className="bg-gradient-to-r from-violet-600 to-purple-700 p-3 sm:p-3">
         <h2 className="text-white font-bold text-lg sm:text-lg text-base line-clamp-2" title={title}>
           {title}
         </h2>
       </div>
 
       {/* Content */}
-      <div className="p-4 sm:p-4 flex-1 flex flex-col">
-        <p className="text-gray-600 dark:text-gray-300 mb-4 flex-1 line-clamp-3 text-sm sm:text-base">
+      <div className="p-3 sm:p-4 flex-1 flex flex-col">
+        <p className="text-gray-600 dark:text-gray-300 mb-3 flex-1 line-clamp-3 text-sm">
           {description}
         </p>
 
         {/* Tags */}
         {tags.length > 0 && (
-          <div className="flex flex-wrap mt-2 gap-1">
+          <div className="flex flex-wrap gap-1">
             {tags.map(tag => (
               <button
                 key={tag}
