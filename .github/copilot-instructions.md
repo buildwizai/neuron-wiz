@@ -1,0 +1,4 @@
+- **Code Improvement**: Refactor existing code to enhance readability and performance before adding new functions; eliminate code duplication by reusing components and utilities for NeuronWiz.
+- **Coding Practices**: Follow JavaScript (ESLint with Airbnb style guide) and React conventions; use functional components, hooks, and consistent naming (e.g., `camelCase` for variables, `PascalCase` for components).
+- **Best Practices**: Write modular, testable code with Jest unit tests for components and utilities; document all functions and components with JSDoc; maintain a clear folder structure (e.g., `components/`, `utils/`, `scripts/`) for NeuronWiz.
+- **Security Considerations**: Sanitize Markdown inputs using a library like `sanitize-html` to prevent XSS; validate YAML frontmatter in `scripts/gen-index.js` for NeuronWiz; ensure no sensitive data (e.g., API keys) is hardcoded in the NeuronWiz static site.

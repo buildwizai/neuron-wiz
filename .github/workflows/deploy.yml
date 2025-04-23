@@ -1,0 +1,92 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js ⚙️
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Get commit SHA
+        id: get_commit_sha
+        run: echo "::set-output name=sha::$(git rev-parse HEAD)"
+
+      - name: Install dependencies 📦
+        run: npm ci
+
+      - name: Create content directory
+        run: mkdir -p content public/thumbnails
+
+      - name: Generate example content
+        run: |
+          cat > content/example.md << EOF
+          ---
+          title: Example Mind Map
+          description: This is an example mind map created during build
+          tags: [example, mindmap]
+          created: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          updated: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          ---
+
+          # Example Mind Map
+
+          ## Core Features
+
+          ### Markdown Rendering
+          #### Hierarchical Structure
+          #### Collapsible Nodes
+
+          ### Search Functionality
+          #### Full-Text Search
+          #### Tag-Based Filtering
+
+          ### Export Options
+          #### SVG Export
+          #### PNG Export
+
+          ## User Interface
+
+          ### Responsive Design
+          #### Mobile Support
+          #### Desktop Optimization
+
+          ### Accessibility
+          #### Keyboard Navigation
+          #### Screen Reader Support
+          EOF
+
+      - name: Generate index data
+        run: node scripts/gen-index.js
+
+      - name: Generate thumbnails
+        run: |
+          npm install -g markmap-cli
+          for file in content/*.md; do
+            filename=$(basename "$file" .md)
+            markmap "$file" --no-open --output "public/thumbnails/$filename.png"
+          done
+
+      - name: Build 🔨
+        run: npm run build
+        env:
+          VITE_COMMIT_SHA: ${{ steps.get_commit_sha.outputs.sha }}
+
+      - name: Deploy to GitHub Pages 🚀
+        if: github.ref == 'refs/heads/main'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist
+          branch: gh-pages
