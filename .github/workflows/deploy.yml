@@ -36,9 +36,9 @@ jobs:
         env:
           VITE_COMMIT_SHA: ${{ steps.get_commit_sha.outputs.sha }}
 
-      - name: Deploy to GitHub Pages 🚀
-        if: github.ref == 'refs/heads/main'
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          folder: dist
-          branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          cname: neuronwiz.buildwizai.com  # New line to persist custom domain
