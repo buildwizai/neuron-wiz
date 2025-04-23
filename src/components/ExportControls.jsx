@@ -331,7 +331,7 @@ const ExportControls = ({ markmapRef, title, markdown }) => {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="px-3 py-1 flex items-center bg-blue-600 text-white rounded hover:bg-blue-700"
+        className="px-3 py-1 flex items-center bg-violet-600 text-white rounded hover:bg-violet-700"
         aria-label="Export mind map"
         data-testid="export-dropdown-button"
       >
@@ -350,7 +350,7 @@ const ExportControls = ({ markmapRef, title, markdown }) => {
                 className="px-4 py-2 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-700"
                 data-testid="export-svg-button"
               >
-                Export as SVG
+                SVG
               </button>
             </li>
             <li>
@@ -359,7 +359,7 @@ const ExportControls = ({ markmapRef, title, markdown }) => {
                 className="px-4 py-2 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-700"
                 data-testid="export-png-button"
               >
-                Export as PNG
+                PNG
               </button>
             </li>
             <li>
@@ -368,7 +368,7 @@ const ExportControls = ({ markmapRef, title, markdown }) => {
                 className="px-4 py-2 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-700"
                 data-testid="export-markdown-button"
               >
-                Export as Markdown
+                Markdown
               </button>
             </li>
           </ul>

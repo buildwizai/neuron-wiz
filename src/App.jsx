@@ -189,14 +189,7 @@ function App() {
       <footer className="bg-gradient-to-r from-gray-100 via-violet-50 to-purple-100 dark:from-gray-900 dark:via-violet-900 dark:to-purple-900 shadow">
         <div className="container mx-auto px-4 py-6 text-sm text-gray-600 dark:text-gray-400 flex flex-col md:flex-row justify-between items-center gap-2">
           <div className="flex flex-col md:flex-row items-center gap-2">
-            <p className="font-semibold">Neuron Wiz &copy; 2025</p>
-            <span className="hidden md:inline-block mx-2">|</span>
-            <a href="https://github.com/buildwizai/neuron-wiz" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:underline text-violet-600 dark:text-violet-400">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.422 2.865 8.166 6.839 9.504.5.092.682-.217.682-.482 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.461-1.11-1.461-.908-.621.069-.609.069-.609 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.091-.647.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.104-.254-.446-1.274.098-2.656 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.748-1.025 2.748-1.025.546 1.382.204 2.402.1 2.656.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.565 4.944.359.309.679.919.679 1.853 0 1.337-.012 2.419-.012 2.749 0 .267.18.577.688.479C19.138 20.182 22 16.442 22 12.021 22 6.484 17.523 2 12 2z" />
-              </svg>
-              <span>GitHub</span>
-            </a>
+            <p className="font-semibold">Build Wiz AI &copy; 2025</p>
           </div>
           <div className="text-xs text-gray-500 dark:text-gray-400 text-center md:text-right mt-2 md:mt-0">
             <p>Open source project for interactive AI mind maps. <a href="https://github.com/buildwizai/neuron-wiz" target="_blank" rel="noopener noreferrer" className="underline hover:text-violet-500">View on GitHub</a></p>
