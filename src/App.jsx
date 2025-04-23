@@ -5,6 +5,7 @@ import ExpandCollapseControls from './components/ExpandCollapseControls'
 import { Routes, Route, useNavigate, useLocation, Link } from 'react-router-dom'
 import SearchBar from './components/SearchBar'
 import TagCloud from './components/TagCloud'
+import MindMapStats from './components/MindMapStats'
 import { useStore } from './utils/store'
 import Sidebar from './components/Sidebar'
 import CircuitBackground from './components/CircuitBackground'
@@ -115,6 +116,16 @@ function App() {
               <div className="mb-8">
                 <TagCloud />
               </div>
+
+              {/* Mind map stats */}
+              {!isLoading && (
+                <div className="mb-4">
+                  <MindMapStats
+                    totalCount={mindMaps.length}
+                    filteredCount={filteredMindMaps.length}
+                  />
+                </div>
+              )}
 
               {/* Mind map grid */}
               {isLoading ? (
