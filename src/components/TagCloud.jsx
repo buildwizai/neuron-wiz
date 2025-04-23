@@ -39,8 +39,9 @@ const TagCloud = () => {
   if (!allTags.length) return null;
 
   return (
-    <div className="tag-cloud">
-      <div className="flex flex-wrap items-center gap-2">
+    <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl shadow-sm p-4 border border-white/20 dark:border-gray-700/30">
+      <h2 className="text-lg font-semibold mb-3">Tags</h2>
+      <div className="flex flex-wrap gap-2">
         <span className="text-gray-700 dark:text-gray-300 mr-2 font-medium">
           Filter by tags:
         </span>

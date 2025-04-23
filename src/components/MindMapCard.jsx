@@ -37,11 +37,11 @@ const MindMapCard = ({ id, title, description, tags = [], created }) => {
   return (
     <Link
       to={`/view/${id}`}
-      className="mindmap-card bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col hover:translate-y-[-4px] w-full h-full"
+      className="mindmap-card backdrop-blur-sm bg-white/90 dark:bg-gray-800/90 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col hover:translate-y-[-4px] w-full h-full border border-white/20 dark:border-gray-700/30"
       aria-label={`Open mind map: ${title || ''}`}
     >
       {/* Card header with gradient background */}
-      <div className="bg-gradient-to-r from-violet-600 to-purple-700 p-3 sm:p-3">
+      <div className="bg-gradient-to-r from-violet-600 to-purple-600 p-3 sm:p-3">
         <h2 className="text-white font-bold text-lg sm:text-lg text-base line-clamp-2" title={title}>
           {title}
         </h2>

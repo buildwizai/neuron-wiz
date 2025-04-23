@@ -87,13 +87,13 @@ function App() {
   );
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+    <div className={`min-h-screen flex flex-col ${!location.pathname.startsWith('/view/') ? 'bg-gradient-to-br from-gray-50 via-violet-50 to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-purple-950' : 'bg-gray-50 dark:bg-gray-900'} text-gray-900 dark:text-gray-100`}>
       <main className="flex-1">
         <Routes>
         {/* Home page with mind map listings */}
         <Route path="/" element={
           <>
-            <section className="bg-white dark:bg-gray-800 shadow pb-4">
+            <section className="bg-gradient-to-b from-white/80 to-transparent dark:from-gray-800/80 dark:to-transparent backdrop-blur-sm shadow pb-4">
               <div className="container mx-auto px-4 py-8 flex flex-col items-center text-center">
               <img
             src="/images/neuronwiz-logo.svg"
