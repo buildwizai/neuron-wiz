@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 /**
  * CircuitBackground component renders a decorative background pattern with
- * digital circuit effects and neural network elements
+ * digital circuit effects and neural network elements.
+ * Optimized with reduced pattern density (2 per row) for cleaner visuals.
  *
  * @param {Object} props - Component props
  * @param {boolean} props.darkMode - Whether dark mode is active
@@ -29,60 +30,94 @@ const CircuitBackground = ({ darkMode, className = '' }) => {
         preserveAspectRatio="xMidYMid slice"
       >
         <defs>
-          {/* Circuit pattern definition */}
-          <pattern id="circuit-pattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
-            {/* Main circuit lines */}
-            <path d="M10,80 L90,80 L90,40 L130,40 L130,120 L190,120" stroke={colors.circuit} strokeWidth="1.5" fill="none" />
-            <path d="M10,160 L50,160 L50,20 L110,20 L110,100 L190,100" stroke={colors.circuit} strokeWidth="1.5" fill="none" />
-            <path d="M100,10 L100,70 L160,70 L160,190" stroke={colors.circuit} strokeWidth="1.5" fill="none" />
-            <path d="M180,10 L180,50 L130,50 L130,150 L60,150 L60,190" stroke={colors.circuit} strokeWidth="1.5" fill="none" />
-
-            {/* Circuit nodes */}
-            <circle cx="90" cy="80" r="4" fill={colors.node} />
-            <circle cx="50" cy="160" r="3" fill={colors.node} />
-            <circle cx="110" cy="20" r="3" fill={colors.node} />
-            <circle cx="130" cy="40" r="4" fill={colors.node} />
-            <circle cx="130" cy="120" r="3" fill={colors.node} />
-            <circle cx="160" cy="70" r="3" fill={colors.node} />
-            <circle cx="130" cy="50" r="4" fill={colors.node} />
-            <circle cx="60" cy="150" r="3" fill={colors.node} />
-
-            {/* Neural connections (circular nodes with links) */}
-            <circle cx="40" cy="40" r="6" fill={colors.highlight} opacity="0.6" />
-            <circle cx="120" cy="80" r="8" fill={colors.highlight} opacity="0.7" />
-            <circle cx="70" cy="130" r="7" fill={colors.highlight} opacity="0.5" />
-            <circle cx="150" cy="150" r="5" fill={colors.highlight} opacity="0.8" />
-
-            {/* Neural connections */}
-            <path d="M40,40 L120,80" stroke={colors.highlight} strokeWidth="1" opacity="0.6" />
-            <path d="M120,80 L70,130" stroke={colors.highlight} strokeWidth="1" opacity="0.6" />
-            <path d="M70,130 L150,150" stroke={colors.highlight} strokeWidth="1" opacity="0.6" />
+          {/* Circuit pattern definition - reduced to 2 per row with increased spacing */}
+          <pattern id="circuit-pattern" x="0" y="0" width="400" height="400" patternUnits="userSpaceOnUse">
+            {/* First circuit cluster - top left */}
+            <g transform="translate(50, 50)">
+              {/* Main circuit lines */}
+              <path d="M10,80 L90,80 L90,40 L130,40 L130,100" stroke={colors.circuit} strokeWidth="1.5" fill="none" />
+              <path d="M40,10 L40,60 L80,60 L80,120" stroke={colors.circuit} strokeWidth="1.5" fill="none" />
+              
+              {/* Circuit nodes */}
+              <circle cx="90" cy="80" r="4" fill={colors.node} />
+              <circle cx="130" cy="40" r="3" fill={colors.node} />
+              <circle cx="40" cy="60" r="4" fill={colors.node} />
+              <circle cx="80" cy="60" r="3" fill={colors.node} />
+              
+              {/* Neural node with connections */}
+              <circle cx="60" cy="90" r="6" fill={colors.highlight} opacity="0.7" />
+            </g>
+            
+            {/* Second circuit cluster - top right */}
+            <g transform="translate(250, 50)">
+              {/* Main circuit lines */}
+              <path d="M20,10 L20,60 L80,60 L80,110" stroke={colors.circuit} strokeWidth="1.5" fill="none" />
+              <path d="M10,40 L60,40 L60,90 L100,90" stroke={colors.circuit} strokeWidth="1.5" fill="none" />
+              
+              {/* Circuit nodes */}
+              <circle cx="20" cy="60" r="3" fill={colors.node} />
+              <circle cx="80" cy="60" r="4" fill={colors.node} />
+              <circle cx="60" cy="90" r="3" fill={colors.node} />
+              
+              {/* Neural node with connections */}
+              <circle cx="40" cy="40" r="5" fill={colors.highlight} opacity="0.6" />
+            </g>
+            
+            {/* Third circuit cluster - bottom left */}
+            <g transform="translate(50, 250)">
+              {/* Main circuit lines */}
+              <path d="M10,50 L70,50 L70,100 L120,100" stroke={colors.circuit} strokeWidth="1.5" fill="none" />
+              <path d="M50,10 L50,70 L90,70" stroke={colors.circuit} strokeWidth="1.5" fill="none" />
+              
+              {/* Circuit nodes */}
+              <circle cx="70" cy="50" r="3" fill={colors.node} />
+              <circle cx="70" cy="100" r="4" fill={colors.node} />
+              <circle cx="50" cy="70" r="3" fill={colors.node} />
+              
+              {/* Neural node with connections */}
+              <circle cx="90" cy="70" r="7" fill={colors.highlight} opacity="0.5" />
+            </g>
+            
+            {/* Fourth circuit cluster - bottom right */}
+            <g transform="translate(250, 250)">
+              {/* Main circuit lines */}
+              <path d="M30,30 L80,30 L80,90 L120,90" stroke={colors.circuit} strokeWidth="1.5" fill="none" />
+              <path d="M60,10 L60,60 L110,60" stroke={colors.circuit} strokeWidth="1.5" fill="none" />
+              
+              {/* Circuit nodes */}
+              <circle cx="80" cy="30" r="4" fill={colors.node} />
+              <circle cx="80" cy="90" r="3" fill={colors.node} />
+              <circle cx="60" cy="60" r="3" fill={colors.node} />
+              
+              {/* Neural node with connections */}
+              <circle cx="100" cy="75" r="6" fill={colors.highlight} opacity="0.7" />
+            </g>
+            
+            {/* Neural connections between clusters */}
+            <path d="M110,140 L250,100" stroke={colors.highlight} strokeWidth="1" opacity="0.4" />
+            <path d="M140,300 L250,250" stroke={colors.highlight} strokeWidth="1" opacity="0.3" />
           </pattern>
         </defs>
 
         {/* Apply the pattern to the background */}
         <rect x="0" y="0" width="100%" height="100%" fill="url(#circuit-pattern)" />
 
-        {/* Large subtle neural network node clusters */}
-        <g opacity="0.15">
-          <circle cx="20%" cy="30%" r="120" fill={colors.primary} />
-          <circle cx="85%" cy="20%" r="100" fill={colors.secondary} />
-          <circle cx="70%" cy="85%" r="150" fill={colors.primary} />
-          <circle cx="15%" cy="85%" r="80" fill={colors.secondary} />
+        {/* Large subtle neural network node clusters - positioned for better spacing */}
+        <g opacity="0.12">
+          <circle cx="25%" cy="20%" r="120" fill={colors.primary} />
+          <circle cx="75%" cy="30%" r="100" fill={colors.secondary} />
+          <circle cx="65%" cy="80%" r="150" fill={colors.primary} />
+          <circle cx="20%" cy="70%" r="80" fill={colors.secondary} />
         </g>
 
-        {/* Animated pulse effect around main nodes */}
-        <circle cx="20%" cy="30%" r="8" fill={colors.highlight}>
-          <animate attributeName="opacity" values="0.8;0.2;0.8" dur="4s" repeatCount="indefinite" />
-          <animate attributeName="r" values="8;12;8" dur="4s" repeatCount="indefinite" />
+        {/* Animated pulse effect around main nodes - reduced to two for subtlety */}
+        <circle cx="25%" cy="20%" r="8" fill={colors.highlight}>
+          <animate attributeName="opacity" values="0.7;0.2;0.7" dur="5s" repeatCount="indefinite" />
+          <animate attributeName="r" values="8;12;8" dur="5s" repeatCount="indefinite" />
         </circle>
-        <circle cx="85%" cy="20%" r="6" fill={colors.highlight}>
-          <animate attributeName="opacity" values="0.7;0.3;0.7" dur="5s" repeatCount="indefinite" />
-          <animate attributeName="r" values="6;10;6" dur="5s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="70%" cy="85%" r="7" fill={colors.highlight}>
-          <animate attributeName="opacity" values="0.6;0.2;0.6" dur="6s" repeatCount="indefinite" />
-          <animate attributeName="r" values="7;11;7" dur="6s" repeatCount="indefinite" />
+        <circle cx="75%" cy="80%" r="6" fill={colors.highlight}>
+          <animate attributeName="opacity" values="0.6;0.1;0.6" dur="6s" repeatCount="indefinite" />
+          <animate attributeName="r" values="6;10;6" dur="6s" repeatCount="indefinite" />
         </circle>
       </svg>
     </div>

@@ -95,15 +95,15 @@ function App() {
         {/* Home page with mind map listings */}
         <Route path="/" element={
           <>
-            <section className="bg-gradient-to-b from-white/80 to-transparent dark:from-gray-800/80 dark:to-transparent backdrop-blur-sm shadow pb-4">
+            <section className="bg-gradient-to-b from-white/80 to-transparent dark:from-gray-800/80 dark:to-transparent shadow pb-4">
               <div className="container mx-auto px-4 py-8 flex flex-col items-center text-center">
-              <img
-            src="/images/neuronwiz-logo.svg"
-            alt="NeuronWiz Logo"
-            className="h-25"
-            width="360"
-            height="100"
-          />
+                <img
+                  src="/images/neuronwiz-logo.svg"
+                  alt="NeuronWiz Logo"
+                  className="h-25"
+                  width="360"
+                  height="100"
+                />
                 <p className="text-lg text-gray-700 dark:text-gray-300 mb-2">Explore, visualize, and connect the world of artificial intelligence through interactive mind maps.</p>
                 <div className="mb-4 w-full max-w-xl">
                   <SearchBar />
