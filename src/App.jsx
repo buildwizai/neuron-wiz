@@ -7,6 +7,7 @@ import SearchBar from './components/SearchBar'
 import TagCloud from './components/TagCloud'
 import { useStore } from './utils/store'
 import Sidebar from './components/Sidebar'
+import CircuitBackground from './components/CircuitBackground'
 import './components/Sidebar.css'
 
 // Lazy load components to reduce initial bundle size
@@ -87,8 +88,9 @@ function App() {
   );
 
   return (
-    <div className={`min-h-screen flex flex-col ${!location.pathname.startsWith('/view/') ? 'bg-gradient-to-br from-gray-50 via-violet-50 to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-purple-950' : 'bg-gray-50 dark:bg-gray-900'} text-gray-900 dark:text-gray-100`}>
-      <main className="flex-1">
+    <div className={`min-h-screen flex flex-col relative ${!location.pathname.startsWith('/view/') ? 'bg-gradient-to-br from-gray-50 via-violet-50 to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-purple-950' : 'bg-gray-50 dark:bg-gray-900'} text-gray-900 dark:text-gray-100`}>
+      <CircuitBackground darkMode={darkMode} />
+      <main className="flex-1 relative z-10">
         <Routes>
         {/* Home page with mind map listings */}
         <Route path="/" element={
