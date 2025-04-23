@@ -1,6 +1,7 @@
 import { useEffect, useRef, lazy, Suspense } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDownload, faShareNodes, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import ExpandCollapseControls from './components/ExpandCollapseControls'
 import { Routes, Route, useNavigate, useLocation, Link } from 'react-router-dom'
 import SearchBar from './components/SearchBar'
 import TagCloud from './components/TagCloud'
@@ -14,6 +15,8 @@ const ExportControls = lazy(() => import('./components/ExportControls'))
 const ShareControls = lazy(() => import('./components/ShareControls'))
 
 function App() {
+  // ...
+  const expandLevelRef = useRef(2); // Track current expand level, default 2
   const navigate = useNavigate();
   const location = useLocation();
   const markmapRef = useRef(null);
@@ -59,7 +62,9 @@ function App() {
 
   // Handle markmap ready
   const handleMarkmapReady = (ref) => {
-    markmapRef.current = ref;
+    // Accepts { svg, markmap, root }
+    markmapRef.current = ref.markmap;
+    markmapRef.root = ref.root;
   };
 
   // Apply dark mode class to document when darkMode changes
@@ -169,17 +174,17 @@ function App() {
                       {currentMindMap?.title || 'Loading...'}
                     </h1>
                   </div>
-                  <div className="flex items-center space-x-4">
+                  <div className="flex flex-wrap items-center gap-2 md:gap-4">
                     {currentMindMap && (
                       <>
-                          <ExportControls
-                            markmapRef={markmapRef}
-                            title={currentMindMap.title}
-                            markdown={currentMindMap.content}
-                            buttonIcon={
-                              <FontAwesomeIcon icon={faDownload} className="h-4 w-4 mr-1" />
-                            }
-                          />
+                        <ExportControls
+                          markmapRef={markmapRef}
+                          title={currentMindMap.title}
+                          markdown={currentMindMap.content}
+                          buttonIcon={
+                            <FontAwesomeIcon icon={faDownload} className="h-4 w-4 mr-1" />
+                          }
+                        />
                         <ShareControls
                           url={window.location.href}
                           title={currentMindMap.title}
@@ -187,6 +192,16 @@ function App() {
                           buttonIcon={
                             <FontAwesomeIcon icon={faShareNodes} className="h-4 w-4 mr-1" />
                           }
+                        />
+                        <ExpandCollapseControls
+                          onCollapseAll={() => {
+                            if (markmapRef.current && markmapRef.root) {
+                              expandLevelRef.current = 1;
+                              markmapRef.current.setOptions({ initialExpandLevel: 1 });
+                              markmapRef.current.setData(markmapRef.root);
+                              markmapRef.current.fit();
+                            }
+                          }}
                         />
                       </>
                     )}
