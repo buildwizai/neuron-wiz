@@ -92,19 +92,19 @@ function App() {
   // Loading fallback component
   const LoadingFallback = () => (
     <div className="flex justify-center items-center p-8">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-600 dark:border-violet-500"></div>
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 dark:border-green-500"></div>
     </div>
   );
 
   return (
-    <div className={`min-h-screen flex flex-col relative ${!location.pathname.startsWith('/view/') ? 'bg-gradient-to-br from-gray-50 via-violet-50 to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-purple-950' : 'bg-gray-50 dark:bg-gray-900'} text-gray-900 dark:text-gray-100`}>
-      <CircuitBackground darkMode={darkMode} />
+    <div className={`min-h-screen flex flex-col relative ${!location.pathname.startsWith('/view/') ? 'bg-gradient-to-br from-green-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-green-950' : 'bg-white dark:bg-gray-900'} text-gray-900 dark:text-gray-100`}>
+      <CircuitBackground darkMode={darkMode} mainColor="green" />
       <main className="flex-1 relative z-10">
         <Routes>
         {/* Home page with mind map listings */}
         <Route path="/" element={
           <>
-            <section className="bg-gradient-to-b from-white/80 to-transparent dark:from-gray-800/80 dark:to-transparent shadow pb-4">
+            <section className="bg-gradient-to-b from-green-50/80 to-transparent dark:from-gray-800/80 dark:to-transparent shadow pb-4">
               <div className="container mx-auto px-4 py-8 flex flex-col items-center text-center">
                 <img
                   src="/images/neuronwiz-logo.svg"
@@ -138,10 +138,9 @@ function App() {
               {/* Mind map grid */}
               {isLoading ? (
                 <div className="flex flex-col justify-center items-center py-12">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-600 dark:border-violet-400 mb-4"></div>
-                  <div className="w-64 h-4 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 dark:border-green-400 mb-4"></div>                    <div className="w-64 h-4 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-violet-600 transition-all duration-300"
+                      className="h-full bg-green-600 transition-all duration-300"
                       style={{ width: `${loadingProgress}%` }}
                     ></div>
                   </div>
@@ -293,7 +292,7 @@ function App() {
                                 // Export logic via ExportControls
                                 if (markmapRef.current) markmapRef.current.export?.();
                               }}
-                              className="w-full flex flex-row items-center justify-center px-4 py-3 rounded bg-violet-600 text-white font-semibold hover:bg-violet-700 transition-colors text-base shadow-sm whitespace-nowrap"
+                              className="w-full flex flex-row items-center justify-center px-4 py-3 rounded bg-green-600 text-white font-semibold hover:bg-green-700 transition-colors text-base shadow-sm whitespace-nowrap"
                             >
                               <FontAwesomeIcon icon={faDownload} className="h-5 w-5 mr-2" /> Export
                             </button>
@@ -312,7 +311,7 @@ function App() {
                                   navigator.clipboard.writeText(window.location.href);
                                 }
                               }}
-                              className="w-full flex flex-row items-center justify-center px-4 py-3 rounded bg-violet-600 text-white font-semibold hover:bg-violet-700 transition-colors text-base shadow-sm whitespace-nowrap"
+                              className="w-full flex flex-row items-center justify-center px-4 py-3 rounded bg-green-600 text-white font-semibold hover:bg-green-700 transition-colors text-base shadow-sm whitespace-nowrap"
                             >
                               <FontAwesomeIcon icon={faShareNodes} className="h-5 w-5 mr-2" /> Share
                             </button>
@@ -355,7 +354,7 @@ function App() {
                     </div>
                   ) : (
                     <div className="flex justify-center items-center h-64">
-                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-600 dark:border-violet-400"></div>
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 dark:border-green-400"></div>
                     </div>
                   )}
                 </main>
@@ -366,13 +365,13 @@ function App() {
       </Routes>
       </main>
       {!location.pathname.startsWith('/view/') && (
-        <footer className="bg-gradient-to-r from-gray-100 via-violet-50 to-purple-100 dark:from-gray-900 dark:via-violet-900 dark:to-purple-900 shadow">
+        <footer className="bg-gradient-to-r from-green-100 via-white to-gray-100 dark:from-gray-900 dark:via-green-900 dark:to-gray-900 shadow">
           <div className="container mx-auto px-2 py-4 text-sm text-gray-600 dark:text-gray-400 flex flex-col md:flex-row justify-between items-center gap-2">
             <div className="flex flex-col md:flex-row items-center gap-2">
               <p className="font-semibold">Build Wiz AI &copy; 2025</p>
             </div>
             <div className="text-xs text-gray-500 dark:text-gray-400 text-center md:text-right mt-2 md:mt-0">
-              <p>Open source project for interactive AI mind maps. <a href="https://github.com/buildwizai/neuron-wiz" target="_blank" rel="noopener noreferrer" className="underline hover:text-violet-500">View on GitHub</a></p>
+              <p>Open source project for interactive AI mind maps. <a href="https://github.com/buildwizai/neuron-wiz" target="_blank" rel="noopener noreferrer" className="underline hover:text-green-600">View on GitHub</a></p>
               <p className="mt-1">Build: {commitSha.substring(0, 7)}</p>
             </div>
           </div>

@@ -10,39 +10,34 @@ import PropTypes from 'prop-types';
  * @param {string} props.className - Additional CSS classes to apply
  * @returns {JSX.Element} - Circuit background SVG overlay with spatial depth
  */
-const CircuitBackground = ({ darkMode, className = '' }) => {
-  // Colors for light and dark mode
+const CircuitBackground = ({ darkMode, className = '', mainColor }) => {
+  // Colors for light and dark mode, using green as main color, using green as main color
   const colors = useMemo(() => ({
-    // Background base colors - deep space feel
     space: darkMode
-      ? 'rgba(13, 6, 35, 0.5)'
-      : 'rgba(245, 243, 255, 0.6)',
-
-    // Circuit colors
+      ? 'rgba(20, 40, 20, 0.5)'
+      : 'rgba(240, 253, 244, 0.7)', // green-50
     primary: darkMode
-      ? 'rgba(139, 92, 246, 0.15)'
-      : 'rgba(139, 92, 246, 0.1)',
+      ? 'rgba(34, 197, 94, 0.15)' // green-500
+      : 'rgba(74, 222, 128, 0.12)', // green-400
     secondary: darkMode
-      ? 'rgba(168, 85, 247, 0.15)'
-      : 'rgba(168, 85, 247, 0.1)',
+      ? 'rgba(16, 185, 129, 0.15)' // green-600
+      : 'rgba(187, 247, 208, 0.1)', // green-200
     circuit: darkMode
-      ? 'rgba(139, 92, 246, 0.2)'
-      : 'rgba(139, 92, 246, 0.12)',
+      ? 'rgba(74, 222, 128, 0.2)' // green-400
+      : 'rgba(34, 197, 94, 0.12)', // green-500
     node: darkMode
-      ? 'rgba(139, 92, 246, 0.25)'
-      : 'rgba(139, 92, 246, 0.2)',
+      ? 'rgba(74, 222, 128, 0.25)'
+      : 'rgba(34, 197, 94, 0.2)',
     highlight: darkMode
-      ? 'rgba(167, 139, 250, 0.3)'
-      : 'rgba(167, 139, 250, 0.2)',
-
-    // Stars and distant lights
+      ? 'rgba(16, 185, 129, 0.3)'
+      : 'rgba(74, 222, 128, 0.2)',
     star: darkMode
       ? 'rgba(255, 255, 255, 0.7)'
-      : 'rgba(139, 92, 246, 0.5)',
+      : 'rgba(34, 197, 94, 0.5)',
     starDim: darkMode
       ? 'rgba(255, 255, 255, 0.3)'
-      : 'rgba(139, 92, 246, 0.2)'
-  }), [darkMode]);
+      : 'rgba(74, 222, 128, 0.2)'
+  }), [darkMode, mainColor]);
 
   // Generate star-like points randomly positioned
   const generateStars = (count, opacity) => {
@@ -204,12 +199,14 @@ const CircuitBackground = ({ darkMode, className = '' }) => {
 
 CircuitBackground.propTypes = {
   darkMode: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  mainColor: PropTypes.string
 };
 
 CircuitBackground.defaultProps = {
   darkMode: false,
-  className: ''
+  className: '',
+  mainColor: 'green'
 };
 
 export default CircuitBackground;

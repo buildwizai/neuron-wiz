@@ -103,9 +103,9 @@ const TagCloud = () => {
               onClick={() => toggleTag(tag)}
               className={`px-3 py-1 text-sm rounded-full transition-colors flex items-center gap-1.5 ${
                 selectedTags.includes(tag)
-                  ? 'bg-violet-600 text-white'
+                  ? 'bg-green-600 text-white'
                   : isTopTag
-                    ? 'bg-gradient-to-r from-teal-100 to-cyan-100 text-teal-900 border border-teal-300 dark:from-teal-900 dark:to-cyan-900 dark:text-teal-100 dark:border-teal-700'
+                    ? 'bg-gradient-to-r from-green-100 to-emerald-100 text-green-900 border border-green-300 dark:from-green-900 dark:to-emerald-900 dark:text-green-100 dark:border-green-700'
                     : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
               } ${isTopTag ? 'font-medium' : ''}`}
               aria-pressed={selectedTags.includes(tag)}
@@ -114,9 +114,9 @@ const TagCloud = () => {
               <span>{tag}</span>
               <span className={`inline-flex items-center justify-center rounded-full text-xs px-1.5 min-w-[1.25rem] ${
                 selectedTags.includes(tag)
-                  ? 'bg-violet-500 text-white'
+                  ? 'bg-green-500 text-white'
                   : isTopTag
-                    ? 'bg-teal-300 text-teal-800 dark:bg-teal-700 dark:text-teal-100'
+                    ? 'bg-green-300 text-green-800 dark:bg-green-700 dark:text-green-100'
                     : 'bg-gray-300 text-gray-700 dark:bg-gray-600 dark:text-gray-200'
               }`}>
                 {tagCounts[tag] || 0}
@@ -132,7 +132,7 @@ const TagCloud = () => {
         {allTags.length > 10 && (
           <button
             onClick={toggleShowAllTags}
-            className="px-3 py-1 text-sm rounded-full transition-colors bg-violet-100 text-violet-800 dark:bg-violet-900 dark:text-violet-200 hover:bg-violet-200 dark:hover:bg-violet-800 border border-violet-300 dark:border-violet-700 font-medium ml-2"
+            className="px-3 py-1 text-sm rounded-full transition-colors bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 hover:bg-green-200 dark:hover:bg-green-800 border border-green-300 dark:border-green-700 font-medium ml-2"
             aria-expanded={showAllTags}
           >
             {showAllTags ? 'Show less' : `Show all (${allTags.length})`}

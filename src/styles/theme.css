@@ -1,0 +1,28 @@
+/* Green theme color variables */
+:root {
+  --color-main: #4ade80; /* Tailwind green-400 */
+  --color-main-dark: #22c55e; /* Tailwind green-500 */
+  --color-main-light: #bbf7d0; /* Tailwind green-200 */
+  --color-main-bg: #f0fdf4; /* Tailwind green-50 */
+}
+
+body {
+  background: var(--color-main-bg, #f0fdf4);
+}
+
+/* Link colors */
+a {
+  color: var(--color-main, #4ade80);
+}
+a:hover {
+  color: var(--color-main-dark, #22c55e);
+}
+
+/* Button colors */
+.btn-primary {
+  background-color: var(--color-main, #4ade80);
+  border-color: var(--color-main-dark, #22c55e);
+}
+.btn-primary:hover {
+  background-color: var(--color-main-dark, #22c55e);
+}

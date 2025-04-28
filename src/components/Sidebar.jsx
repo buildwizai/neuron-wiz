@@ -43,14 +43,14 @@ function Sidebar({ mindMaps, currentMindMapId, onSelectMindMap }) {
       aria-label="Mind map navigation sidebar"
     >
       <button
-        className="flex items-center justify-center w-10 h-10 mt-4 mb-2 mx-auto rounded-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 shadow focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all"
+        className="flex items-center justify-center w-10 h-10 mt-4 mb-2 mx-auto rounded-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 shadow focus:outline-none focus:ring-2 focus:ring-green-500 transition-all"
         onClick={() => setCollapsed(!collapsed)}
         aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         tabIndex={0}
       >
         <FontAwesomeIcon
           icon={collapsed ? faChevronRight : faChevronLeft}
-          className="text-2xl text-violet-600 dark:text-violet-300 transition-transform duration-200"
+          className="text-2xl text-green-600 dark:text-green-300 transition-transform duration-200"
         />
       </button>
       {!collapsed && (
@@ -62,7 +62,7 @@ function Sidebar({ mindMaps, currentMindMapId, onSelectMindMap }) {
             </div>
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-violet-500 dark:focus:border-violet-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-green-500 focus:border-green-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
               placeholder="Search mindmaps..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -83,7 +83,7 @@ function Sidebar({ mindMaps, currentMindMapId, onSelectMindMap }) {
                   key={mm.id}
                   className={`px-3 py-2 rounded cursor-pointer select-none transition-colors text-xs
                     ${mm.id === currentMindMapId
-                      ? 'bg-violet-100 dark:bg-violet-900 text-violet-700 dark:text-violet-200 font-bold'
+                      ? 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200 font-bold'
                       : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200'}
                   `}
                   onClick={() => onSelectMindMap(mm.id)}

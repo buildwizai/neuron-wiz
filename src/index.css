@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "markmap-toolbar/dist/style.css";
+@import "./styles/theme.css";
 
 .mm-toolbar img {
   display: inline;

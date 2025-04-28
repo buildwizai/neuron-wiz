@@ -71,7 +71,7 @@ const MindMapCard = ({ id, title, description, tags = [], created }) => {
       aria-label={`Open mind map: ${title || ''}`}
     >
       {/* Card header with less bright gradient background */}
-      <div className="bg-gradient-to-r from-purple-900 to-gray-900 p-3 sm:p-3">
+      <div className="bg-gradient-to-r from-green-800 to-gray-900 p-3 sm:p-3">
         <h2 className="text-white font-bold text-base sm:text-base line-clamp-2" title={title}>
           {title}
         </h2>
@@ -92,7 +92,7 @@ const MindMapCard = ({ id, title, description, tags = [], created }) => {
                 onClick={(e) => handleTagClick(e, tag)}
                 className={`text-xs px-1.5 py-0.5 rounded-full transition-colors ${
                   selectedTags.includes(tag)
-                    ? 'bg-violet-600 text-white'
+                    ? 'bg-green-600 text-white'
                     : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
                 }`}
               >
@@ -115,7 +115,7 @@ const MindMapCard = ({ id, title, description, tags = [], created }) => {
         {/* Card footer with date */}
         {created && (
           <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-1 text-violet-500 dark:text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 mr-1 text-green-500 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
             <span>Created {formatDate(created)}</span>

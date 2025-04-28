@@ -331,7 +331,7 @@ const ExportControls = ({ markmapRef, title, markdown, buttonIcon }) => {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="px-3 py-1 flex items-center bg-violet-600 text-white rounded hover:bg-violet-700"
+        className="px-3 py-1 flex items-center bg-green-600 text-white rounded hover:bg-green-700"
         aria-label="Export mind map"
         data-testid="export-dropdown-button"
       >

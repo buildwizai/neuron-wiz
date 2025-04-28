@@ -20,7 +20,7 @@ export default function Navbar() {
   }, [darkMode]);
 
   return (
-    <nav className="bg-white dark:bg-gray-800 shadow">
+    <nav className="bg-gradient-to-r from-green-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-green-950 shadow">
       <div className="container mx-auto px-4 py-2 flex flex-col sm:flex-row justify-between items-center">
         <a
           href="/"
