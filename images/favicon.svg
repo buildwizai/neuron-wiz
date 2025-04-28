@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
   <!-- Neural Network Nodes and Connections -->
-  <rect width="32" height="32" rx="4" fill="#f5f3ff" />
+  <rect width="32" height="32" rx="4" fill="#f0fdf4" />
   <g transform="translate(2, 2) scale(0.875)">
     <!-- Neural Nodes -->
-    <circle cx="8" cy="16" r="4" fill="#6d28d9" />
-    <circle cx="18" cy="8" r="3" fill="#6d28d9" />
-    <circle cx="18" cy="24" r="3" fill="#6d28d9" />
-    <circle cx="28" cy="16" r="4" fill="#6d28d9" />
+    <circle cx="8" cy="16" r="4" fill="#16a34a" />
+    <circle cx="18" cy="8" r="3" fill="#16a34a" />
+    <circle cx="18" cy="24" r="3" fill="#16a34a" />
+    <circle cx="28" cy="16" r="4" fill="#16a34a" />
 
     <!-- Neural Connections -->
-    <path d="M8,16 L18,8" stroke="#6d28d9" stroke-width="1.5" />
-    <path d="M8,16 L18,24" stroke="#6d28d9" stroke-width="1.5" />
-    <path d="M18,8 L28,16" stroke="#6d28d9" stroke-width="1.5" />
-    <path d="M18,24 L28,16" stroke="#6d28d9" stroke-width="1.5" />
+    <path d="M8,16 L18,8" stroke="#16a34a" stroke-width="1.5" />
+    <path d="M8,16 L18,24" stroke="#16a34a" stroke-width="1.5" />
+    <path d="M18,8 L28,16" stroke="#16a34a" stroke-width="1.5" />
+    <path d="M18,24 L28,16" stroke="#16a34a" stroke-width="1.5" />
 
     <!-- Pulse Animation Effect (Static in SVG) -->
-    <circle cx="8" cy="16" r="6" fill="none" stroke="#8b5cf6" stroke-width="0.75" opacity="0.6" />
-    <circle cx="28" cy="16" r="6" fill="none" stroke="#8b5cf6" stroke-width="0.75" opacity="0.6" />
+    <circle cx="8" cy="16" r="6" fill="none" stroke="#4ade80" stroke-width="0.75" opacity="0.6" />
+    <circle cx="28" cy="16" r="6" fill="none" stroke="#4ade80" stroke-width="0.75" opacity="0.6" />
   </g>
 </svg>
