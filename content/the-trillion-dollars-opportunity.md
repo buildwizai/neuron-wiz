@@ -1,5 +1,5 @@
 ---
-title: Sequoia AI Ascent 2025 Keynote: Perspectives on the World of AI
+title: Sequoia AI Ascent 2025 Keynote - Perspectives on the World of AI
 tags: [AI, Market Trends, Keynote, Sequoia]
 description: Insights from Sequoia's 2025 keynote on AI market dynamics, opportunities, and future predictions.
 markmap:
