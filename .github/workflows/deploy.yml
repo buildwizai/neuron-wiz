@@ -7,9 +7,11 @@ on:
     branches: [ main ]
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,13 +34,25 @@ jobs:
         run: node scripts/gen-index.js
 
       - name: Build 🔨
-        run: npm run build
+        run: npm run build:github
         env:
           VITE_COMMIT_SHA: ${{ steps.get_commit_sha.outputs.sha }}
+          VITE_USE_HASH_ROUTER: true
 
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./dist
+
+  deploy:
+    environment:
+      name: github-pages
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          cname: neuronwiz.buildwizai.com  # New line to persist custom domain
+          cname: neuronwiz.buildwizai.com  # Custom domain
