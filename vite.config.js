@@ -13,10 +13,16 @@ export default defineConfig(({ mode }) => {
   
   return {
   plugins: [react(), tailwindcss()],
-  base: isGitHubPages ? '/neuron-wiz/' : './', // Use repo name for GitHub Pages, relative paths otherwise
+  base: isGitHubPages ? '/' : './', // Use root for GitHub Pages, relative paths otherwise
   build: {
     outDir: 'dist',
     sourcemap: true,
+    assetsDir: 'assets',
+    rollupOptions: {
+      input: {
+        main: './index.html'
+      }
+    }
   },
   server: {
     port: 3000,
