@@ -1,0 +1,582 @@
+---
+title: Google I/O '25 Keynote Summary
+description: A mind map summarizing the key AI advancements announced at Google I/O '25.
+tags: [AI, Google, Gemini, I/O, Search, Creative Tools, Android XR]
+markmap:
+  colorFreezeLevel: 2
+  maxWidth: 500
+---
+# Google I/O '25 Keynote
+## Introduction
+- Chaz (Toro y Moi) performance with Lyria RealTime
+- Sundar Pichai Welcome
+- Every day is Gemini season
+- Shipping models and products faster than ever
+- 12+ models/research breakthroughs since last I/O
+- 20+ major AI products/features since last I/O
+## Gemini Model Progress
+- **Rapid Model Progress**
+  - Step function change
+  - Elo scores up 300+ points since Gemini Pro Gen 1
+- **Gemini 2.5 Pro**
+  - Sweeps LMArena leaderboard in all categories
+  - State-of-the-art on many benchmarks
+  - Rapid progress in coding
+  - Reached #1 on WebDev arena
+  - Surpasses previous version by 142 Elo points
+  - Fastest-growing model on Cursor
+  - Completed Pokémon Blue
+  - Learning capabilities (incorporates LearnLM)
+  - Leading model for learning
+  - Preview shipped two weeks prior
+  - Use cases: vibe-code, build games/apps, unpack scientific papers, understand YouTube videos, turning sketches into apps, simulating 3D cities
+  - Coming soon for general availability
+- **Gemini 2.5 Flash**
+  - Most efficient workhorse model
+  - Popular with developers (speed, low cost)
+  - Updated version released
+  - Better in nearly every dimension (reasoning, code, long context)
+  - Second only to 2.5 Pro on LMArena
+  - Generally available in early June
+  - Preview available in AI Studio, Vertex AI, Gemini app
+  - More efficient (22% gains on evals)
+  - Thinking Budgets feature
+- **Gemini Diffusion**
+  - Newest research model (experimental text diffusion)
+  - Brings diffusion to text
+  - Excels at editing (math, code)
+  - Iterates and error corrects quickly
+  - Leverages parallel generation
+  - Extremely low latency
+  - 5x faster than 2.0 Flash Lite
+  - Matches 2.0 Flash Lite coding performance
+  - Currently in testing with small group
+- **Gemini 2.5 Pro DeepThink**
+  - New mode for 2.5 Pro
+  - Pushes model performance limits
+  - Uses latest research in thinking/reasoning (parallel techniques)
+  - Incredible performance on USAMO 2025 (maths)
+  - Leads on LiveCodeBench (competition coding)
+  - Excels on MM-MU (multimodal benchmark)
+  - Frontier safety evaluations ongoing
+  - Available to trusted testers via Gemini API
+## Infrastructure
+- **TPU Ironwood**
+  - Seventh generation TPU
+  - Designed for thinking and inference at scale
+  - 10x performance over previous generation
+  - 42.5 exaflops of compute per pod
+  - Coming to Google Cloud customers later this year
+- Infrastructure strength helps deliver faster models
+- Gemini holds top 3 spots on LMArena for output tokens per second
+- Model prices coming down significantly
+- Delivering best models at most effective price
+- Shifted the Pareto frontier
+## Adoption and Usage
+- World adopting AI faster than ever
+- **Monthly Tokens Processed Across Products/APIs**
+  - Last year: 9.7 trillion
+  - Now: 480 trillion (50x increase)
+- **Developer API Adoption**
+  - 7M+ developers built with Gemini API (AI Studio, Vertex AI)
+  - 5x growth since last I/O
+  - Gemini usage on Vertex AI up 40x+ since last year
+- **Product Adoption**
+  - Gemini app: 400M+ monthly active users
+  - Strong growth/engagement with 2.5 models
+  - 2.5 Pro usage in Gemini app up 45%
+  - AI Overviews in Search: 1.5B+ users every month
+  - Bringing generative AI to more people than any other product
+  - Users happier with results, search more often
+  - Driving 10%+ growth in queries showing AI Overviews
+## Research to Reality / Product Transformation
+- Decades of research becoming reality
+- **Project Starline**
+  - Breakthrough video technology
+  - Goal: feeling of being in the same room remotely
+  - Technical advances made
+  - **Google Beam**
+    - New AI-first video communications platform
+    - State-of-the-art video model transforms 2D to realistic 3D
+    - Array of 6 cameras captures different angles
+    - AI merges streams, renders on 3D light-field display
+    - Near-perfect head tracking (millimeter, 60 fps, real time)
+    - More natural, immersive conversation
+    - First devices available for early customers later this year (HP collaboration)
+  - **Integration into Google Meet**
+    - Realtime speech translation (break down language barriers)
+    - Matches speaker's tone, patterns, expressions
+    - Closer to natural, free-flowing conversation across languages
+    - Directly in Google Meet for subscribers (English/Spanish available)
+    - More languages rolling out
+    - Coming to enterprises later this year
+- **Project Astra**
+  - Explores future universal AI assistant capabilities
+  - Understand the world around you
+  - **Integration into Products**
+    - **Gemini Live**
+      - Has Astra's camera and screen-sharing capabilities
+      - Talk about anything you see
+      - Use cases: job interview practice, marathon training
+      - Rolling out to everyone on Android and iOS starting today
+      - Capabilities like video understanding, screen sharing, memory
+      - Upgraded voice output (native audio, more natural)
+      - Improved memory
+      - Added computer control
+      - Roadmap overflowing with new ideas prototyped in Astra
+      - Experiences work great on Android
+      - Connect to apps: Calendar, Maps, Keep, Tasks (coming soon)
+      - Understands context and intent in richer ways on XR devices
+    - **Search Live (in AI Mode)**
+      - Brings Astra's Live capabilities into AI Mode
+      - Talk through problems, show what you mean (DIY repair, school assignment, new skill)
+      - Use camera, Search sees what you see
+      - Helpful information back-and-forth, real time
+      - Like video call with Search
+- **Project Mariner**
+  - Research prototype: agent that can interact with the web and get stuff done
+  - Agents combine AI intelligence with tools access
+  - Take actions on your behalf, under your control
+  - Computer use is important agentic capability
+  - Interact with browsers and software
+  - Early step testing computer use
+  - Progress since December release
+  - Multitasking: oversees up to 10 simultaneous tasks
+  - Teach and Repeat: show task once, learns plan for similar tasks
+  - **Integration into Products**
+    - Computer use capabilities available to developers via Gemini API
+    - Trusted testers building with it (Automation Anywhere, UI Path)
+    - Available more broadly this summer
+    - Part of building for agent ecosystem
+    - Open agent-to-agent protocol launched at Cloud Next (60+ partners)
+    - Model context protocol (MCP) by Anthropic (agents access services)
+    - Gemini SDK compatible with MCP tools (announced today)
+    - Agentic capabilities coming to Chrome, Search, Gemini app
+    - **Agent Mode (in Gemini app)**
+      - Find apartment for you and roommates based on criteria
+      - Goes to work behind the scenes
+      - Finds listings (e.g., Zillow)
+      - Uses Project Mariner for specific filters
+      - Uses MCP to access listings, schedule tours
+      - Keeps browsing for new listings
+      - Experimental version coming soon to subscribers
+      - Benefits users and ecosystem (e.g., Zillow - new customers, conversion)
+    - **Agentic Search (in AI Mode)**
+      - Takes work off your plate, under your control
+      - Tasks like finding event tickets
+      - Query fan-out across sites, analyzes options, fills forms
+      - Reasons across realtime pricing/inventory
+      - Provides ticket options, context, links to checkout
+      - Will help with tickets, restaurant reservations, local service appointments soon
+- **Personal Context**
+  - Personalization brings research into reality
+  - Gemini models use relevant context across your Google apps (with permission)
+  - Private, transparent, fully under your control
+  - **Personalized Smart Reply (in Gmail)**
+    - Smart Reply is popular
+    - Responses can sound like you
+    - Be a better friend (example: road trip advice for Felix)
+    - Gemini does the work (looks up notes in Drive, scans emails/Docs)
+    - Matches typical greetings, captures tone, style, word choices
+    - Automatically generates reply (includes details from notes, favorite adjective)
+    - Available in Gmail this summer for subscribers
+  - Useful across Search, Docs, Gemini, etc.
+  - **Personal Context (in AI Mode Search)**
+    - Makes responses more helpful
+    - Personalized suggestions based on past searches
+    - Opt-in to connect other Google apps (starting with Gmail)
+    - AI Mode shows when personal context is used
+    - Gets preferences (e.g., outdoor seating preference)
+    - Suggests activities based on interests (e.g., gallery newsletters -> art exhibits)
+    - Syncs event ideas with travel dates/location (from email confirmations)
+    - Customized recommendations
+    - Always under your control (connect/disconnect apps)
+    - Coming to AI Mode this summer
+  - **Personal Context (in Gemini app)**
+    - AI assistant that learns you, your preferences, projects, world
+    - Always in the driver's seat
+    - Share relevant Google information with permission (extension of you)
+    - Already possible to connect Search History
+    - Start soon: add more personal context from across Google
+    - Uniquely helpful responses (e.g., recipes)
+    - Choose to turn on/off, view/manage information, connect/disconnect apps
+    - Enables proactive assistant
+    - Assistant sees what's coming, helps prepare before you ask (e.g., physics exam prep)
+    - Comes with personalized quizzes (from materials, notes, photos, handwritten notes)
+    - Can make custom explainer videos based on interests (e.g., thermodynamics explained with cycling analogy)
+## Google Search Transformation (AI Mode)
+- No product embodies Google mission more than Search
+- Gemini models making Search more intelligent, agentic, personalized
+- AI Overviews scaled to 1.5B+ users
+- Users happier, search more often
+- Driving growth in specific queries
+- One of most successful Search launches in a decade
+- AI Overviews strong driver of growth for visual searches (Google Lens)
+- Lens grew 65% YoY, 100B+ visual searches this year, 1.5B+ users monthly
+- People asking more complex queries (2-3x length of traditional searches)
+- **AI Mode**
+  - Next big step for Search
+  - Total reimagining of Search
+  - More advanced reasoning
+  - Tackle longer, more complex queries
+  - Go further with follow-up questions
+  - Available today as new tab right in Search
+  - Completely changed how Sundar uses Search
+  - Coming to everyone in the U.S. starting today
+  - Where frontier capabilities first come to Search
+  - Gemini 2.5 coming to Search this week
+  - Search transformed with Gemini 2.5 at the core
+  - Our most powerful AI search
+  - Glimpse of what's to come (features will graduate to core Search)
+  - Same models power AI Overviews and AI Mode
+  - Ask your hardest questions in the Search box
+  - Gets even better with: personal context, deeper research, complex analysis/visualization, live multimodality, new ways to shop
+  - Ask whatever's on your mind, Search gets to work
+  - Generates response: text, images, links, map (dynamically adapts UI)
+  - Links to content/creators/merchants/businesses
+  - Follow up conversationally
+  - Brings a whole new level of intelligence
+  - **Query Fan-out Technique**
+    - Under the hood, Search recognizes need for advanced reasoning
+    - Calls custom Gemini version
+    - Breaks question into subtopics
+    - Issues multitude of queries simultaneously
+    - Searches across entire web (deeper than traditional search)
+    - Taps into realtime datasets (Knowledge Graph, Shopping Graph, local data from Maps community)
+    - Pulls together response, checks work
+    - Issues more searches if gaps detected
+    - Get results from single search, faster
+  - **Deep Search (coming soon in Labs)**
+    - For more thorough responses
+    - Uses multiplied query fan-out (dozens/hundreds of searches)
+    - Reasons across disparate information
+    - Creates expert-level, fully cited report in minutes
+    - Includes web links throughout for exploring/taking action
+  - **Complex Analysis and Data Visualization (coming this summer)**
+    - For sports and financial questions
+    - Analyzes data (e.g., baseball stats for torpedo bat users)
+    - Provides easy-to-read tables
+    - Uses continuously updated sports data (down to last strike)
+    - Brings in important context (e.g., early season)
+    - Follow up questions (e.g., home runs)
+    - Dynamically generates right UI (e.g., graphs)
+    - Like having a personal sports analyst
+  - **Agentic Capabilities (coming soon)**
+    - Bringing Project Mariner into AI Mode
+    - Takes work off your plate, under your control
+    - Example: find two affordable lower level tickets for a Reds game Saturday
+    - Kicks off query fan-out, analyzes options across sites
+    - Does tedious work (filling forms)
+    - Reasons across results, analyzes realtime pricing/inventory
+    - Task complete! Provides ticket options, context, links to checkout
+    - Skips bunch of steps
+    - Will help with event tickets, restaurant reservations, local services appointments soon
+  - **Multimodality (Live Capabilities)**
+    - Blazing the trail since Google Lens (2017)
+    - Easier to search what you see (Lens, Circle to Search)
+    - Bring Project Astra's Live capabilities into AI Mode (Search Live)
+    - Using camera, Search sees what you see
+    - Gives helpful info back-and-forth, real time
+    - Examples: science experiment help, strawberry ripeness, remote control help, bike tire pressure, baking soda reaction, cinnamon water, stain removal help
+  - **Shopping with Google**
+    - New level of intelligence to shopping
+    - Brings in web info and realtime data (Shopping Graph - 50B+ products)
+    - Visual inspiration (Google Images)
+    - Example: find rug for light gray couch to brighten room
+    - Dynamically generates browsable mosaic (images, shoppable products)
+    - Personalized (from go-to brands, modern style searches)
+    - Understands context (e.g., 4 active kids -> messes)
+    - Recommends low pile/washable/durable rugs, provides shoppable products
+    - Points out things to consider, helpful follow-ups
+    - Takes days of research down to minutes
+    - Helpful for all shopping needs
+    - **Virtual Try-on (new feature)**
+      - Solve online shopping dilemma (how styles look on me)
+      - Virtually try on clothes to feel how styles might look
+      - Upload your own picture (full length, clear view)
+      - Custom image generation model trained for fashion
+      - Deep understanding of human body, how clothing looks
+      - Works with your photo, not precaptured model
+      - Shows how material folds, stretches, drapes on people
+      - State-of-the-art technology at scale
+      - Visualize how billions of apparel products look on wide variety of people
+      - Gives a feel for how dress might look
+      - Rolling out in coming months, try on looks in Labs today
+    - **Agentic Checkout (new feature)**
+      - Once set on item, Search can find it at price you want and buy it
+      - Example: find and buy blue dress
+      - Track price feature
+      - Set target price
+      - Tracking continuously checks websites
+      - Notification when price drops
+      - Checkout agent adds right size/color to cart
+      - Choose to review info or let agent buy
+      - Buy securely with Google Pay in one tap, under your guidance
+      - Rolling out in coming months
+  - AI Overviews bring AI helpfulness to main Search
+  - AI Mode is totally reimagined AI Search with cutting-edge features
+  - Ask anything: simplest/hardest questions, deep research, personalized shopping, tasks
+## Gemini App Development
+- Goal: make Gemini the most personal, proactive, powerful AI assistant
+- Starts with being personal (Personal Context - discussed above)
+- Enables proactive assistant (discussed above)
+- Powered by 2.5 Pro model
+- People doing extraordinary things (inventing games, making websites, thinking things into existence)
+- New superpower for everyone (software, videos, images)
+- **5 Launches Today in Gemini App**
+  - **Gemini Live** (discussed above)
+    - Capabilities free and rolling out across Android/iOS
+    - Interactive, natural conversations (5x longer than text)
+    - 45+ languages, 150+ countries
+    - Great for talking through things (e.g., driving)
+    - Includes camera/screen sharing today
+    - Connect to apps: Calendar, Maps, Keep, Tasks (in coming weeks)
+    - Roadmap filled with Project Astra prototypes
+  - **Deep Research** (discussed above)
+    - Sometimes need to go deep, unravel complex things
+    - Let you upload your own files to guide Research Agent (top requested)
+    - Soon: research across Google Drive and Gmail
+    - Example: analyze detailed report on comets
+  - **Canvas**
+    - Gemini's space for co-creation
+    - Transform report with one tap into new things
+    - Dynamic webpage, infographic, helpful quiz, podcast (45 languages)
+    - Vibe code amazing things with back-and-forth
+    - Example: interactive comet simulation built with Gemini collaboration
+    - Can now share apps like this for others to modify/remix
+    - Power to transform anything, whole new way to use Gemini
+  - **Imagen 4** (discussed below)
+    - Latest and most capable image generation model
+    - Coming to Gemini app
+  - **Veo 3** (discussed below)
+    - New state-of-the-art video model
+    - Coming to Gemini app
+## Creative Tools & Generative Media
+- Expanding boundaries of creativity
+- Working closely with artistic community
+- **Music AI Sandbox**
+  - Tool for professionals to explore Lyria possibilities
+  - Worked with musicians (e.g., Shankar Mahadevan)
+  - Inspiring tool, opens doors
+- **Lyria 2**
+  - Launched recently
+  - Generate high-fidelity music, professional-grade audio
+  - Music is melodious with vocals (solos, choirs)
+  - Expressive and rich music
+  - Available today for enterprises, YouTube creators, musicians
+- **SynthID**
+  - Pioneered invisible watermarks into generated media (two years ago)
+  - 10B+ pieces of content watermarked to date
+  - Expanding partnerships for more watermarking and detection
+  - **SynthID Detector**
+    - Makes detection easier
+    - Identify if image, audio, text, video has SynthID (whole or part)
+    - Starting to roll out to early testers today
+- **Veo** (discussed above)
+  - State-of-the-art video model
+  - Deep understanding of intuitive physics (gravity, light, materials)
+  - Maintains accuracy and consistency across frames
+  - Knows what to do with creative prompts
+  - Critical for robotics (world models needed)
+  - Fine-tuned specialized model: Gemini Robotics (teaches robots to grasp, follow instructions, adjust)
+  - Play with robots in AI Sandbox
+- **Veo 3** (discussed above)
+  - State-of-the-art video model
+  - Available today
+  - Better visual quality, stronger physics
+  - Native audio generation (sound effects, background, dialogue)
+  - Characters can speak (example: owl and badger)
+  - Combined audio and video creation
+  - Incredibly realistic, photorealistic generation
+  - Emotion, movement (example: ocean)
+  - Continues to be incredible creative tool
+  - Working closely with film industry (Director Darren Aronofsky, Primordial Soup)
+  - Shape capabilities to meet storytellers needs (artists in driver's seat)
+  - Putting best video model into hands of filmmakers
+  - Push boundaries for creative/emotional storytelling
+  - First short film: "ANCESTRA" (Director Eliza McNitt)
+    - Combines live-action with Veo-generated video (microscopic worlds, cosmic events, newborn)
+    - Opened new storytelling possibilities
+    - Empowered Eliza to bring cinematic scale/emotion to personal story
+  - **New Filmmaker Capabilities**
+    - Use ingredients provided (characters, scenes, styles) and keep consistent
+    - Direct Veo with precise camera instructions, shoot along specific path
+    - Help filmmakers fluidly express ideas
+- **Imagen 4** (discussed above)
+  - Latest and most capable image generation model
+  - Coming to Gemini app today
+  - Richer images, nuanced colors, fine details
+  - Better at text and typography
+  - Gets text/spelling right, makes creative choices (e.g., poster design)
+  - Higher image quality, faster speed, better text
+  - Create posters, party invites, anything else
+  - Native image generation in app
+  - Easily edit images right in app
+  - Super fast variant (10x faster) - iterate through many ideas
+- **Flow**
+  - New AI filmmaking tool
+  - Combines best of Veo, Imagen, Gemini
+  - Built for creatives, by creatives
+  - Inspired by creative zone feeling
+  - Launching today
+  - Project example: grandpa building flying car with bird friend
+  - Ingredients: upload own images or generate with Imagen (built in)
+  - Assemble clips
+  - Single prompt describe what you want, including precise camera controls
+  - Puts everything in place
+  - Keep iterating in scene builder
+  - Hit plus to create next shot (character/scene consistency just works)
+  - Describe next event (e.g., add 10ft chicken)
+  - If not right, go back and trim
+  - Works in other direction: extend a clip
+  - Download files
+  - Bring into favorite editing software, add music from Lyria
+  - Filmmakers describe it as finding the path, seeing possibilities, traveling dimensions, looking down on characters/worlds, building upon itself, spontaneous garden, not forcing it, just finding it
+## AI for Society
+- AI is helping society right now
+- **Firesat**
+  - Constellation of satellites
+  - Uses multispectral satellite imagery and AI
+  - Aims to provide near-realtime insights for wildfires
+  - High resolution (detect fires small as 270 sq ft)
+  - First satellite in orbit now
+  - When fully operational, imagery updated every 20 mins (down from 12 hours)
+- **Hurricane Helene Relief**
+  - Wing (drones) partnership with Walmart and Red Cross
+  - Provided relief efforts with drone deliveries
+  - Supported by AI
+  - Delivered critical items (food, medicine) to shelter based on realtime needs
+  - Helpful in disaster relief in other communities, actively working to scale up
+- Research today will become reality in few years
+- Future possibilities: helpful robots, treatments for diseases, error-corrective quantum computers, fully autonomous vehicles
+- Opportunity to improve lives
+- Waymo experience (seeing father amazed) highlighted power of technology to inspire
+## Android & XR
+- Android: platform where you see the future first
+- Bold new design, major updates to Android 16 and Wear OS 6 last week
+- Android is best place to experience AI
+- Many Gemini breakthroughs coming soon to Android
+- Access Gemini instantly from power button (understands context, ready to help)
+- Android powering ecosystem of devices
+- **Gemini on Devices**
+  - Coming to watch, car's dashboard, TV in coming months
+  - Helpful AI assistant wherever you are
+- **Android XR**
+  - Emerging form factors for new AI assistant experiences
+  - First Android platform built in Gemini era
+  - Supports broad spectrum of devices (headsets, glasses, everything in between)
+  - Not one-size-fits-all for XR
+  - Different devices for different use cases (immersive headset for movies/games/work, lightweight glasses for on the go info)
+  - Built together as one team with Samsung
+  - Optimized for Snapdragon with Qualcomm
+  - Android XR developer preview released last year
+  - Hundreds of developers building for platform
+  - Reimagining favorite Google apps for XR
+  - Mobile and tablet apps work too
+  - Gemini transforms how you experience headsets and glasses
+  - AI assistant understands context and intent in richer ways
+  - **Gemini on Headsets**
+    - Samsung's Project Moohan: first Android XR device
+    - Infinite screen to explore apps with Gemini
+    - Google Maps in XR: teleport anywhere by asking Gemini
+    - Talk with assistant about what you see, pull up videos/websites
+    - MLB app: watch games as if in stadium while chatting with Gemini about stats
+    - Project Moohan available for purchase later this year
+  - **Gemini on Glasses**
+    - Working on glasses for over 10 years
+    - Lightweight, designed for all-day wear
+    - Packed with technology (camera, mics, speakers)
+    - Camera/mics give Gemini ability to see and hear world
+    - Speakers let you listen to AI, play music, take calls
+    - Optional in-lens display shows helpful info privately
+    - Works with phone (access apps, hands free)
+    - Natural form factor for AI, power of Gemini where you are
+    - Get superpowers when you put glasses on
+    - Early demo backstage I/O (Nishtha Bhatia)
+      - See exactly what she sees through lens
+      - Receive text, launch Gemini
+      - Send text, silence notifications
+      - Interact with others (Dieter Bohn, Giannis Antetokounmpo)
+      - Identify band on photo wall (Counting Crows), connection to venue
+      - Show photo of performance, play song
+      - Identify coffee shop name from cup (Bloomsgiving) - great memory
+      - Show photos from Maps
+      - Get walking directions, heads-up directions, full 3D map
+      - Send event invite (coffee with Dieter)
+      - Search what she sees, remember details, book event, navigate
+      - Without taking phone out of pocket
+      - Used as personal teleprompter (Shahram)
+      - Take a photo
+      - Add photo to favorites
+      - **Live Translation Demo**
+        - Risky demo (Hindi/Farsi)
+        - Show feed from both glasses back here
+        - Real-time English translation shown
+        - Enabled seamless cross-language conversation
+    - Partnership with Samsung extended to glasses
+    - Creating software and reference hardware platform for ecosystem
+    - Glasses prototypes used by trusted testers
+    - Can start developing for glasses later this year
+    - Need to be stylish, wearable all day
+    - First eyewear partners: Gentle Monster, Warby Parker (build glasses with Android XR)
+    - Wear glasses that match personal taste
+- Amazing to see research to reality literally in front of eyes
+## Google AI Subscription Plans
+- Upgrading two AI subscription plans
+- **Google AI Pro**
+  - Global availability
+  - Full suite of AI products
+  - Higher rate limits, special features vs free version
+  - Includes Pro version of Gemini app (formerly Gemini Advanced)
+- **Google AI Ultra**
+  - For trailblazers, pioneers, want cutting edge AI
+  - Highest rate limits
+  - Earliest access to new features and products
+  - Available in US today, rolling out globally soon
+  - VIP pass for Google AI
+  - Includes access to 2.5 Pro Deep Think mode (when ready)
+  - Includes first access to Flow with Veo 3 (available today)
+  - Includes YouTube Premium
+  - Includes massive amount of storage
+- Can't wait to see what built, created, discovered with plans
+## Path to AGI (Artificial General Intelligence)
+- Relentless progress for a year
+- Pushing state-of-the-art relentlessly forward
+- Laid foundations for modern AI era
+- Pioneering Transformer architecture (underpins all LLMs)
+- Agent systems like AlphaGo, AlphaZero
+- Doubling down on fundamental research for next breakthroughs
+- Gemini already best multimodal foundation model
+- **Working to extend Gemini to become a world model**
+  - Can make plans, imagine new experiences by simulating aspects of world (like brain)
+  - Sundar's passion since early days developing AI for simulation games (Theme Park)
+  - Strides made training agents to master complex games (Go, StarCraft)
+  - Genie 2 model: generates 3D simulated environments from single image prompt (interactive)
+  - Capabilities emerging: Gemini's world knowledge/reasoning represents nature
+  - Veo's understanding of intuitive physics
+  - Critical for robotics (world models needed to operate in real world)
+- Making Gemini a full world model is critical step
+- Unlocking new kind of AI: helpful in everyday life, intelligent, understands context, can plan and take action on your behalf (across any device)
+- Ultimate vision for Gemini app: Universal AI Assistant (personal, proactive, powerful)
+- Key milestone on road to AGI
+- Project Astra (video understanding, screen sharing, memory) were first explorations
+- Integrating Astra capabilities into Gemini Live for more people today
+- Continue to improve/explore frontier innovations (native audio, improved memory, computer control)
+- Core career goal: using AI to advance knowledge, accelerate scientific discovery
+- Applying AI across science at Google DeepMind
+- Huge breakthroughs in past year: mathematics, life sciences
+  - AlphaProof (solve maths-olympiad problems at Silver Medal level)
+  - Co-Scientist (collaborate with researchers, develop/test hypotheses)
+  - AlphaEvolve (discover new scientific knowledge, speed up AI training - just released)
+  - AMIE (research system, help clinicians with medical diagnoses)
+  - AlphaFold 3 (predict structure/interactions of all life's molecules)
+  - Isomorphic Labs (builds on AlphaFold, revolutionize drug discovery with AI, help solve global diseases)
+- AlphaFold already had massive impact (standard tool for biology/medical research, 2.5M+ researchers worldwide use it)
+- AGI potential: if done safely/responsibly, accelerate scientific discovery, most beneficial technology ever invented
+- Frontier technology today would seem magic years ago
+- Exciting to see tech powering new product experiences and helping people daily
+- Partnered with Aira (assists blind/low-vision via video to human interpreters)
+  - Built prototype using Astra tech to help more people access assistance
+  - Getting feedback from users, Aira interpreters supervising for safety/reliability
+- Building AI that's more personal, proactive, powerful
+- Enriching lives, advancing scientific progress, ushering in new golden age of discovery/wonder
