@@ -1,5 +1,5 @@
 ---
-title: LogLLaMA: Transformer-based Log Anomaly Detection
+title: LogLLaMA - Transformer-based Log Anomaly Detection
 tags: [log-anomaly-detection, llm, transformer, llama2, machine-learning, reinforcement-learning]
 description: Mindmap overview of the LogLLaMA framework for log anomaly detection using LLaMA2 and reinforcement learning.
 markmap:

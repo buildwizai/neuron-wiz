@@ -1,5 +1,5 @@
 ---
-title: RAG Architectures
+title: RAG Architectures Overview
 tags: [rag, llm, architectures, retrieval, generation, data-retrieval, hallucinations, fact-based]
 description: Overview of RAG architecture types, from simple implementations to advanced agentic systems.
 markmap:

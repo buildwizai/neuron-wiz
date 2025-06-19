@@ -42,32 +42,49 @@ function getUniqueSlug(baseSlug, usedSlugs) {
 }
 
 async function processMarkdownFile(filePath, usedSlugs) {
+  const relativePath = path.relative(MARKDOWN_DIR, filePath);
+  const fileNameWithoutExt = path.basename(filePath, '.md');
+  
   try {
+    console.log(`\nProcessing: ${relativePath}`);
+    
     const content = await fs.readFile(filePath, 'utf-8');
+    console.log('  - Read file content successfully');
+    
     const { data, content: markdownContent } = matter(content);
-    const relativePath = path.relative(MARKDOWN_DIR, filePath);
-    const fileNameWithoutExt = path.basename(filePath, '.md');
+    console.log('  - Parsed frontmatter successfully');
+    console.log(`    Frontmatter keys: ${Object.keys(data).join(', ')}`);
+    
+    // Get file stats for creation time
+    const stats = await fs.stat(filePath);
+    const fileCreatedTime = stats.birthtime;
+    console.log(`  - File creation time: ${fileCreatedTime}`);
 
     // Extract title
     let title = data.title;
+    let titleSource = 'frontmatter';
     if (!title) {
       // Try to extract from first H1
       const h1Match = markdownContent.match(/^#\s+(.+)$/m);
       if (h1Match) {
         title = h1Match[1].trim();
+        titleSource = 'H1 heading';
       } else {
         title = fileNameWithoutExt;
-        console.warn(`Warning: Missing title in frontmatter and H1 in ${filePath}`);
+        titleSource = 'filename';
       }
     }
+    console.log(`  - Title: "${title}" (source: ${titleSource})`);
 
     // Extract description
     let description = data.description;
+    let descriptionSource = 'frontmatter';
     if (!description) {
       // Try to extract the first 3 bullet points
       const bulletLines = markdownContent.split('\n').filter(line => /^\s*([-*+])\s+/.test(line));
       if (bulletLines.length > 0) {
         description = bulletLines.slice(0, 3).map(l => l.replace(/^\s*([-*+])\s+/, '')).join(' ');
+        descriptionSource = 'bullet points';
       } else {
         // Fallback: first non-heading paragraph
         const descMatch = markdownContent.replace(/\r/g, '').split(/\n\s*\n/).find(
@@ -75,37 +92,50 @@ async function processMarkdownFile(filePath, usedSlugs) {
         );
         if (descMatch) {
           description = descMatch.replace(/\n/g, ' ').trim();
+          descriptionSource = 'first paragraph';
         } else {
           description = '';
-          console.warn(`Warning: Missing description in frontmatter, no bullets, and no suitable paragraph in ${filePath}`);
+          descriptionSource = 'none (empty)';
         }
       }
     }
+    console.log(`  - Description: ${description ? 'Found' : 'Missing'} (source: ${descriptionSource})`);
 
-    // Generate a slug if not provided
+    // Generate and check slug
     let baseSlug = data.slug || generateSlug(title);
     let slug = getUniqueSlug(baseSlug, usedSlugs);
+    console.log(`  - Generated slug: ${slug}`);
     if (slug !== baseSlug) {
-      console.warn(`Warning: Duplicate slug '${baseSlug}' detected. Using '${slug}' for file ${filePath}`);
+      console.log(`  - Warning: Duplicate slug detected, using ${slug} instead of ${baseSlug}`);
     }
     usedSlugs.add(slug);
-
+    
     // Create metadata object
-    return {
+    const metadata = {
       id: slug,
       title,
-      description,
+      description: description || '',
       tags: data.tags || [],
-      created: data.created || new Date().toISOString(),
+      created: data.created || fileCreatedTime.toISOString(),
       updated: data.updated || new Date().toISOString(),
       path: relativePath,
       url: `/view/${slug}`,
-      content: content
-      // content: markdownContent, // Only use the markmap content (without frontmatter)
+      content: markdownContent
     };
+
+    console.log(`  - Final metadata:`);
+    console.log(`    Title: ${metadata.title}`);
+    console.log(`    Description: ${metadata.description ? 'Present' : 'Empty'}`);
+    console.log(`    Tags: ${metadata.tags.length}`);
+    console.log(`    Created: ${metadata.created}`);
+    console.log(`    Updated: ${metadata.updated}`);
+    console.log(`    URL: ${metadata.url}`);
+    
+    return metadata;
   } catch (error) {
-    console.error(`Error processing ${filePath}:`, error.message);
-    return null;
+    console.error(`\nError processing ${relativePath}:`);
+    console.error(`  ${error.message}`);
+    throw error;
   }
 }
 
@@ -121,21 +151,46 @@ async function findMarkdownFiles(dir) {
     return entry.isDirectory() ? findMarkdownFiles(fullPath) : fullPath;
   }));
 
-  return files
-    .flat()
-    .filter(file => file.endsWith('.md'));
+  const allFiles = files.flat();
+  const mdFiles = allFiles.filter(file => file.endsWith('.md'));
+  
+  console.log(`Found ${allFiles.length} total files in ${dir}`);
+  console.log(`Found ${mdFiles.length} markdown files in ${dir}`);
+  
+  return mdFiles;
 }
 
 async function processAllMarkdownFiles(files) {
   const results = [];
   const usedSlugs = new Set();
+  const failedFiles = [];
+  
   for (const file of files) {
     const ext = path.extname(file);
     if (ext !== '.md') continue;
     const filePath = path.isAbsolute(file) ? file : path.join(MARKDOWN_DIR, file);
-    const metadata = await processMarkdownFile(filePath, usedSlugs);
-    if (metadata) results.push(metadata);
+    try {
+      const metadata = await processMarkdownFile(filePath, usedSlugs);
+      if (metadata) {
+        results.push(metadata);
+      } else {
+        failedFiles.push({ file: filePath, reason: 'Metadata generation failed' });
+      }
+    } catch (error) {
+      failedFiles.push({ file: filePath, reason: error.message });
+    }
   }
+  
+  if (failedFiles.length > 0) {
+    console.log('\nFailed to process the following files:');
+    failedFiles.forEach(({ file, reason }) => {
+      console.log(`- ${path.relative(MARKDOWN_DIR, file)}: ${reason}`);
+    });
+  }
+  
+  console.log(`\nSuccessfully processed: ${results.length} files`);
+  console.log(`Failed to process: ${failedFiles.length} files\n`);
+  
   return results;
 }
 

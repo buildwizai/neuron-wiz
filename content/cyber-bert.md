@@ -1,5 +1,5 @@
 ---
-title: CySecBERT: Domain-Adapted Language Model for Cybersecurity
+title: CySecBERT - Domain-Adapted Language Model for Cybersecurity
 tags: [cybersecurity, NLP, BERT, language-model, machine-learning, CTI]
 description: Overview and evaluation of CySecBERT, a BERT-based language model adapted for cybersecurity tasks.
 markmap:

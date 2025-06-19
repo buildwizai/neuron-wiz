@@ -21,6 +21,8 @@ function App() {
   const expandLevelRef = useRef(2); // Track current expand level, default 2
   // State for mobile menu
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [sortBy, setSortBy] = useState('created'); // 'alphabetical' or 'created'
+  const [sortDirection, setSortDirection] = useState('desc'); // 'asc' or 'desc'
   const navigate = useNavigate();
   const location = useLocation();
   const markmapRef = useRef(null);
@@ -37,14 +39,25 @@ function App() {
   const toggleDarkMode = useStore(state => state.toggleDarkMode);
   const commitSha = import.meta.env.VITE_COMMIT_SHA || 'development';
 
-  // Sort filteredMindMaps alphabetically by title
+  // Sort filteredMindMaps by selected method and direction
   const sortedMindMaps = useMemo(() => {
     return [...filteredMindMaps].sort((a, b) => {
-      const titleA = (a.title || a.name || '').toLowerCase();
-      const titleB = (b.title || b.name || '').toLowerCase();
-      return titleA.localeCompare(titleB);
+      let comparison = 0;
+      if (sortBy === 'created') {
+        // Sort by creation time
+        const dateA = new Date(a.created || 0);
+        const dateB = new Date(b.created || 0);
+        comparison = dateA - dateB;
+      } else {
+        // Sort alphabetically
+        const titleA = (a.title || a.name || '').toLowerCase();
+        const titleB = (b.title || b.name || '').toLowerCase();
+        comparison = titleA.localeCompare(titleB);
+      }
+      // Apply sort direction
+      return sortDirection === 'desc' ? -comparison : comparison;
     });
-  }, [filteredMindMaps]);
+  }, [filteredMindMaps, sortBy, sortDirection]);
 
   // Initialize app data on component mount
   useEffect(() => {
@@ -125,13 +138,42 @@ function App() {
                 <TagCloud />
               </div>
 
-              {/* Mind map stats */}
+              {/* Mind map stats and sorting */}
               {!isLoading && (
-                <div className="mb-4">
+                <div className="mb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                   <MindMapStats
                     totalCount={mindMaps.length}
                     filteredCount={filteredMindMaps.length}
                   />
+                  <div className="flex items-center gap-2">
+                    <label htmlFor="sort-select" className="text-sm text-gray-600 dark:text-gray-400">
+                      Sort by:
+                    </label>
+                    <select
+                      id="sort-select"
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value)}
+                      className="text-sm rounded-lg border border-gray-300 bg-gray-50 text-gray-900 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 p-2"
+                    >
+                      <option value="created">Creation Time</option>
+                      <option value="alphabetical">Alphabetical</option>
+                    </select>
+                    <button
+                      onClick={() => setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc')}
+                      className="p-2 text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400"
+                      title={sortDirection === 'asc' ? 'Sort Ascending' : 'Sort Descending'}
+                    >
+                      {sortDirection === 'asc' ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                        </svg>
+                      ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
                 </div>
               )}
 
