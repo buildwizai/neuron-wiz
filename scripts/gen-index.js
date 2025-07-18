@@ -55,10 +55,31 @@ async function processMarkdownFile(filePath, usedSlugs) {
     console.log('  - Parsed frontmatter successfully');
     console.log(`    Frontmatter keys: ${Object.keys(data).join(', ')}`);
     
-    // Get file stats for creation time
-    const stats = await fs.stat(filePath);
-    const fileCreatedTime = stats.birthtime;
-    console.log(`  - File creation time: ${fileCreatedTime}`);
+    // Get Git creation time (first commit) and modification time (last commit)
+    let fileTime;
+    try {
+      const { execSync } = await import('child_process');
+      // Get the first commit date for this file
+      const gitCreationDate = execSync(
+        `git log --follow --format=%aI --reverse "${filePath}" | head -1`,
+        { encoding: 'utf-8' }
+      ).trim();
+      
+      if (gitCreationDate) {
+        fileTime = new Date(gitCreationDate);
+        console.log(`  - File creation time from Git: ${fileTime}`);
+      } else {
+        // Fallback to file stats if file is not in git or has no commits
+        const stats = await fs.stat(filePath);
+        fileTime = stats.birthtime;
+        console.log(`  - File creation time from filesystem: ${fileTime}`);
+      }
+    } catch (error) {
+      // Fallback to file stats if git command fails
+      const stats = await fs.stat(filePath);
+      fileTime = stats.birthtime;
+      console.log(`  - File creation time from filesystem (git failed): ${fileTime}`);
+    }
 
     // Extract title
     let title = data.title;
@@ -116,7 +137,7 @@ async function processMarkdownFile(filePath, usedSlugs) {
       title,
       description: description || '',
       tags: data.tags || [],
-      created: data.created || fileCreatedTime.toISOString(),
+      created: data.created || fileTime.toISOString(),
       updated: data.updated || new Date().toISOString(),
       path: relativePath,
       url: `/view/${slug}`,
