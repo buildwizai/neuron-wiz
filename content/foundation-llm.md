@@ -1,0 +1,345 @@
+---
+title: Foundations of Large Language Models
+description: An outline of the basic concepts and techniques related to Large Language Models.
+tags: [LLM, NLP, AI, Pre-training, Prompting, Alignment, Inference]
+markmap:
+  colorFreezeLevel: 2
+  maxWidth: 300
+---
+# Foundations of Large Language Models
+## Preface
+- Origin: Natural Language Processing (NLP)
+- Revolutionary advancement in Artificial Intelligence (AI)
+- Insight: Knowledge acquired through large-scale language modeling tasks
+- Goal: Create a universal model for diverse problems
+- Paradigm Shift: From specialized systems to pre-training foundation models
+  - Fine-tuning
+  - Alignment
+  - Prompting
+## Chapter 1: Pre-training
+### Basics of Pre-training
+- Pre-training NLP Models
+  - Types of Pre-training
+    - Unsupervised
+    - Supervised
+    - Self-supervised (focus of the book)
+  - Adapting Pre-trained Models
+    - Sequence Encoding Models
+      - Represents sequence as vector(s)
+      - Used as input for other models (e.g., classification)
+      - Adaptation: Fine-tuning
+        - Adjusting parameters (ω, θ̂) using labeled data
+        - Freezing encoder parameters (θ̂)
+    - Sequence Generation Models
+      - Generates sequence of tokens based on context
+      - Example: Large Language Models (LLMs) predicting next token
+      - Adaptation: Prompting (transforming NLP problems to text generation)
+        - Simple prompting (text concatenation)
+        - Instruction-based prompts
+        - Zero-shot learning
+        - Few-shot learning (In-context learning - ICL)
+### Self-supervised Pre-training Tasks
+- Decoder-only Pre-training
+  - Used in language models (e.g., Transformer decoder without cross-attention)
+  - Predicts distribution of tokens given preceding tokens
+  - Training: Minimize loss function over token sequences (maximize log likelihood)
+- Encoder-only Pre-training
+  - Function: Reads token sequence, produces vector sequence
+  - Training: Combine encoder with output layers for supervision
+  - Methods
+    - Masked Language Modeling (MLM)
+      - Basis of BERT model
+      - Masks out tokens, predicts masked tokens (bidirectional context)
+      - Discrepancy: [MASK] token used only during training
+    - Permuted Language Modeling
+      - Addresses [MASK] token and masked token dependencies
+      - Sequential prediction but in permuted order (original order unchanged, prediction order varies)
+      - Utilizes both left and right context
+    - Pre-training Encoders as Classifiers
+      - Creates classification challenges from unlabeled text
+      - Example: Next Sentence Prediction (NSP)
+        - Classifies if SentB follows SentA
+        - Often used as additional loss for MLM (e.g., in BERT)
+- Encoder-Decoder Pre-training
+  - Models sequence-to-sequence problems (e.g., translation, QA)
+  - Extends to text-to-text problems (universal system)
+  - Methods
+    - Masked Encoder-Decoder Pre-training (e.g., T5 model)
+      - Tasks framed as Source Text → Target Text
+      - Masks tokens, model predicts masked tokens
+      - Sentinel tokens (e.g., [X]) for masked spans
+    - Denoising Training (e.g., BART model)
+      - Views problem as training denoising autoencoders
+      - Various input corruption methods:
+        - Token Masking
+        - Token Deletion
+        - Span Masking
+        - Sentence Reordering
+        - Document Rotation
+### Comparison of Pre-training Tasks
+- Categorized by training objectives
+  - Language Modeling (autoregressive generation)
+  - Masked Language Modeling (mask-predict framework)
+  - Permuted Language Modeling (reorders input, predicts sequentially)
+  - Discriminative Training (supervision from classification)
+  - Denoising Autoencoding (reconstruct original from corrupted)
+### Example: BERT
+- Standard Model
+  - Transformer encoder trained with Masked Language Modeling (MLM) and Next Sentence Prediction (NSP)
+  - LossBERT = LossMLM + LossNSP
+  - MLM: 15% tokens selected, 80% masked, 10% random, 10% unchanged
+  - NSP: Classifies sequence pairs (IsNext/NotNext)
+- Model Setup
+  - Input: Sum of token embedding, positional embedding, segment embedding
+  - Architecture: Multi-layer Transformer network (self-attention, FFN)
+- Multi-lingual Models (e.g., mBERT)
+  - Trained on bilingual data (translation language modeling)
+  - Captures cross-lingual correspondences
+### Applying BERT Models
+- Fine-tuning pre-trained encoder (BERTθ̂) with prediction network (Predictω)
+  - Classification (Single Text, Pair of Texts)
+  - Regression (real-valued score)
+  - Sequence Labeling (e.g., Part-of-Speech tagging, Named Entity Recognition - NER)
+  - Span Prediction (e.g., Reading Comprehension)
+  - Encoding for Encoder-Decoder Models (initializing encoder parameters)
+## Chapter 2: Generative Models
+### Introduction to LLMs
+- Definition: Generative models like GPT (broadly covers models like BERT)
+- Goal of Language Modeling: Predict probability of token sequence
+- Process: Left-to-right generation, token prediction (arg max Pr(xi|x0...xi-1))
+- Decoder-only Transformers
+  - Popular architecture for LLMs
+  - Structure: Stack of Transformer blocks (self-attention, FFN)
+  - Masking: Only previous tokens considered for prediction (Mask variable in self-attention)
+  - Inference: Autoregressive process, predicts one token at a time
+- Training LLMs
+  - Objective: Maximize log-likelihood over K sequences
+  - Continuous scaling of model size and dataset size yields better results
+- Fine-tuning LLMs
+  - Applied as complete systems for NLP problems via generation
+  - Inference: Finding most likely output sequence y given context x
+  - Task Description: Templates (instruction-like, code-like) to "prompt" LLMs
+  - Instruction Fine-tuning
+    - Learning instruction-following abilities
+    - Requires annotated instruction-response data
+    - Amount of data is much smaller than pre-training data
+- Aligning LLMs with the World
+  - Guiding LLMs to behave according to human intentions (unbiased, truthful, harmless)
+  - Two main steps after pre-training:
+    - Supervised Fine-tuning (SFT): Continued training on task-oriented, labeled data (instruction fine-tuning)
+    - Learning from Human Feedback: Further training based on human preferences (e.g., RLHF)
+      - Agent (LLM to train)
+      - Reward Model (proxy of environment, assigns numerical score)
+      - Overview of RLHF process: Initial LLM training, human preference data annotation, reward model training, RL fine-tuning of policy
+- Prompting LLMs
+  - Assigning roles (e.g., psychologist, code debugger, conversation partner)
+  - Addressing complex tasks (e.g., arithmetic reasoning)
+  - In-context Learning (ICL): Demonstrating problem-solving in prompts
+    - Chain-of-Thought (COT) prompting: Decomposing complex reasoning into intermediate steps
+    - Zero-shot, One-shot, Few-shot learning concepts
+### Training at Scale
+- Data Preparation
+  - Demand for data increases with network size (trillions of tokens)
+  - Issues: Quality, diversity (e.g., incorporating code, multilingual data)
+- Model Modifications
+  - Activation functions (e.g., GeLU, SwiGLU)
+- Distributed Training
+- Scaling Laws
+  - Predictable relationship between model performance and scale (compute, data, parameters)
+### Long Sequence Modeling
+- Handling very long texts
+- Optimization from High-Performance Computing (HPC) Perspectives
+- Efficient Architectures
+  - Reduces computational cost of attention (e.g., sparse attention, linear attention, recurrent models)
+- Cache and Memory (KV Cache)
+  - Stores representations (keys, values) of previously generated tokens
+  - Fixed-size caches (window-based, moving average, recurrent network)
+  - External Memories (e.g., k-NN, Retrieval-Augmented Generation - RAG)
+  - Memory Capacity: Ability to capture important contextual information
+- Sharing across Heads and Layers
+  - Multi-Query Attention (MQA): Shares keys and values across heads
+  - Grouped Query Attention (GQA): Divides heads into groups with shared KVs
+  - Cross-layer sharing: Sharing KV activations or attention weights across layers
+- Position Extrapolation and Interpolation
+  - Allows models to handle sequences longer than seen during training
+  - Methods: T5 bias, Rotary Positional Embedding (RoPE), Position Interpolation
+- Remarks on Long-context LLMs
+  - Learning general knowledge via compression
+  - Evaluation issues (perplexity, synthetic tasks like needle-in-a-haystack, copy memory tasks, long-document NLP tasks)
+## Chapter 3: Prompting
+### General Prompt Design
+- Definition: Input text to an LLM (x) to elicit desired output (y)
+- Prompt Template: Text with placeholders
+- Formatting: "Name:content" style, JSON format, system information
+- In-context Learning (ICL)
+  - Learning during inference without model parameter updates
+  - Activates pre-trained knowledge efficiently
+  - One-shot, Few-shot Learning: Adding demonstrations
+- Prompt Engineering Strategies
+  - Describing the task as clearly as possible
+  - Guiding LLMs to think (e.g., "Let's think step by step")
+  - Providing reference information (e.g., RAG)
+  - Paying attention to prompt formats (e.g., code-style, delimiters)
+- More Examples
+  - Text Classification (e.g., polarity classification)
+  - Information Extraction (e.g., Named Entity Recognition - NER, Relation Extraction)
+  - Text Generation (e.g., text completion, story writing, code generation, poem generation)
+  - Text Transformation (e.g., machine translation, summarization, text style transfer)
+  - Question Answering (e.g., MMLU, GSM8K)
+### Advanced Prompting Methods
+- Chain of Thought (CoT)
+  - Generates step-by-step reasoning for complex problems
+  - Benefits: Decomposes problems, transparency, interpretability, adaptability
+  - Few-shot CoT: Examples of detailed reasoning processes
+  - Zero-shot CoT: Specific instructions (e.g., "Let's think step-by-step")
+  - Applications: Mathematical, logical, commonsense, symbolic reasoning, code generation
+- Problem Decomposition
+  - Breaking down complex problems into simpler sub-problems
+  - Framework: Sub-problem Generation and Sub-problem Solving
+  - Least-to-most prompting: Progressive sequence of sub-problems
+  - Dynamic Sub-problem Generation: Generates sub-problems on the fly
+  - Improved Sub-problem Solvers: Integration with external systems (IR, calculators)
+  - Relation to Multi-hop Question Answering, Compositionality, Tool Use
+- Self-refinement
+  - Iteratively refining LLM outputs
+  - Framework: Prediction, Feedback Collection, Refinement (iterative loop)
+  - Feedback can be manual or automatically generated by LLMs
+  - Enhancing performance through "negative evidence" (contrastive analysis)
+- Ensembling
+  - Combining predictions from multiple models or prompts
+  - Self-consistency: Majority voting among reasoning paths
+- RAG and Tool Use
+  - RAG: Retrieving relevant texts from external sources and augmenting input for LLM
+    - Improves accuracy and depth (factual, up-to-date)
+    - LLM generates response based on retrieved texts
+  - Tool Use: Integrating external tools/APIs during inference
+    - LLM generates markers for tool calls (e.g., web search, calculator)
+    - Requires fine-tuning LLMs to generate commands
+### Learning to Prompt
+- Automated Prompting: Addresses manual effort, limited diversity, complexity
+  - Prompt Optimization (Automatic Prompt Design)
+    - Framework: Prompt Search Space, Performance Estimation, Search Strategy
+    - LLM-based Prompt Optimization: Iterative process (Initialization, Evaluation, Pruning, Expansion)
+  - Soft Prompts
+    - Hidden, distributed representations of prompts (real-valued vectors)
+    - More compact and efficient than hard prompts
+    - Adapting LLMs with Less Prompting (e.g., context distillation, prefix fine-tuning, prompt tuning)
+    - Learning Soft Prompts with Compression: Approximating long context into continuous representations
+  - Prompt Length Reduction
+    - Simplifying natural language prompts (text simplification, heuristics)
+## Chapter 4: Alignment
+### Overview of LLM Alignment
+- Definition: Aligning model outputs with human expectations (accuracy, ethics, non-discriminatory)
+- Approaches:
+  - Fine-tuning with labeled data (Supervised Fine-tuning - SFT)
+  - Fine-tuning with reward models (Reinforcement Learning from Human Feedback - RLHF)
+- Development Stages: Pre-training Stage and Alignment Stage
+### Instruction Alignment
+- Tuning LLMs to accurately respond to user instructions (instruction-following ability)
+- Supervised Fine-tuning (SFT)
+  - Maximizes probability of generating output (y) given input (x)
+  - Data: Input-output pairs (instruction + user input, correct response)
+  - Handles single-round and multi-round prediction problems
+  - Challenges: Labeled data acquisition, computational expense
+- Fine-tuning Data Acquisition
+  - Manually Generated Data: Human annotators create prompt templates and samples
+  - Automatically Generated Data: LLMs generate data (e.g., Self-instruct)
+- Fine-tuning with Less Data
+  - Focus on relevant/impactful examples for efficiency
+  - Superficial Alignment Hypothesis: Core abilities from pre-training, fine-tuning aligns
+- Instruction Generalization
+  - Goal: Generalize within a task and across tasks
+  - Achieved by increasing diversity of fine-tuning data
+- Using Weak Models to Improve Strong Models
+  - Weak LLMs generate synthetic fine-tuning data for strong LLMs
+  - Knowledge distillation, data selection, ensembling, cascading
+### Human Preference Alignment: RLHF
+- Aligning LLMs with human values and preferences (e.g., avoiding harmful content)
+- Components: Agent (LLM), Environment, State, Action, Reward, Policy, Value Function, Reference Model, Target Model
+- Training Reward Models
+  - Learns from human preference data to predict reward for input-output pairs
+  - Human Feedback: Pairwise comparison (most common), Rating, Listwise Ranking
+  - Objective: Minimize loss based on preference (e.g., Bradley-Terry model)
+- Training LLMs (Policy Training)
+  - Uses reward model feedback to update LLM parameters (policy)
+  - Proximal Policy Optimization (PPO) is common algorithm
+- Improved Human Preference Alignment
+  - Supervision Signals: Extending pairwise to listwise ranking (e.g., Plackett-Luce)
+  - Fine-grained Rewards: Segment-level reward modeling
+  - Combination of Reward Models: Mitigates overoptimization
+- Automatic Preference Data Generation
+  - AI feedback: LLMs generate preference labels for output pairs
+  - Probability extraction for pointwise supervision
+- Step-by-step Alignment
+  - Supervises LLM during intermediate reasoning steps
+  - Outcome-based vs. Process-based approaches
+  - Process Reward Model (PRM): Evaluates correctness of each reasoning step
+- Inference-time Alignment
+  - Avoiding fine-tuning by aligning at inference
+  - Best-of-N (BoN) sampling: Generates N outputs, selects best via reward model
+  - Rejection sampling: Selects best outputs to fine-tune LLM
+## Chapter 5: Inference
+### Prefilling and Decoding Framework
+- Goal: Maximize Pr(y|x) (ŷ = arg max Pr(y|x))
+- Two sub-problems: Model Computation (Pr(y|x) efficiently), Search (efficiently finding ŷ)
+- KV Cache: Stores key-value pairs of past representations for efficiency
+- Two-phase Framework
+  - Prefilling: Computes KV cache for input sequence x (compute-bound)
+  - Decoding: Generates tokens based on KV cache (memory-bound, computationally expensive)
+### Decoding Algorithms
+- Search Space: Set of all possible output sequences, represented as a tree
+- Greedy Decoding: Selects the next token with the highest probability at each step
+  - Efficient, simple, but suboptimal
+- Beam Decoding: Maintains a fixed number (beam width K) of best candidates at each step
+  - Extension of greedy search, balances efficiency and accuracy
+- Sampling-based Decoding: Introduces randomness for diversity and flexibility
+  - Pure Sampling: Samples from distribution
+  - Top-k Sampling: Samples from top K most probable tokens
+  - Top-p Sampling (Nucleus Sampling): Samples from smallest set of tokens with cumulative probability > p
+  - Temperature: Adjusts confidence of probabilities (β > 1 for less confident, β < 1 for more confident)
+- Decoding with Penalty Terms: Modifies search objective (e.g., to control output properties)
+- Speculative Decoding (or Speculative Execution)
+  - Uses a small, fast draft model to predict future tokens
+  - A full verification model evaluates predictions in parallel
+  - If correct, accepted; if incorrect, re-generated by verification model
+- Stopping Criteria: End symbol, probability threshold, repetition detection
+### Evaluation Metrics for LLM Inference
+- Accuracy-based (perplexity, F1 score)
+- Robustness (ambiguous, adversarial inputs)
+- Usability (fluency, coherence, relevance, diversity, naturalness)
+- Ethical and fairness metrics
+### Efficient Inference Techniques
+- Reduces memory requirements and accelerates system
+- More Caching: Stores frequent requests/responses (sequence-level caching, prefix caching)
+- Batching: Processing multiple sequences in parallel
+  - Dynamic Batching: Adapts batch size
+  - Grouping by length: Groups similar length sequences
+  - Continuous Batching (vs. static): Processes requests as they arrive
+  - Iteration-level Scheduling: Schedules requests dynamically during batch processing
+  - PagedAttention (Paged KV caching): Optimizes KV cache memory by using fixed-size blocks
+  - Chunked Prefilling: Divides prefilling into chunks to overlap with decoding
+- Parallelization: Model, Tensor, Pipeline parallelism, Mixture-of-Experts (MoE)
+- Memory-Compute-Accuracy Triangle: Trade-off in system design (e.g., data precision - FP16, INT8)
+### Inference-time Scaling
+- Enhances reasoning capabilities of LLMs
+- Context Scaling: Extending input with helpful context
+  - Few-shot prompting, Chain-of-Thought (CoT) prompting
+  - Retrieval-Augmented Generation (RAG)
+- Search Scaling: Increasing output length and search space
+  - Generating long thinking paths (e.g., for math, code)
+  - Exploring compact structures (trees, graphs)
+- Generating and Verifying Thinking Paths
+  - Framework: Search Algorithm (generates candidates), Verifier (evaluates candidates)
+  - Verifiers: Tools (proof checkers, compilers), reward models, other LLMs, heuristics (majority voting)
+  - Parallel Scaling: Generates multiple solutions independently, then selects best
+  - Sequential Scaling (Iterative Refinement): Generates initial solution, then iteratively refines with feedback
+- Step-level Search with Verifiers
+  - Integrates search into step-by-step reasoning path generation
+  - Node representation: Partial reasoning path
+  - Node expansion: LLM generates candidate next steps
+  - Verification: Verifier evaluates newly generated step
+  - Search: Decides which paths to extend/prune
+  - Process Reward Model (PRM): Scalar reward for each reasoning step
+- Encouraging Long Thinking
+  - Training-based scaling: Reinforcement learning, knowledge distillation, iterative refinement
+  - Improves reasoning, eliminates redundant steps, reduces complexity
