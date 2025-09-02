@@ -55,30 +55,63 @@ async function processMarkdownFile(filePath, usedSlugs) {
     console.log('  - Parsed frontmatter successfully');
     console.log(`    Frontmatter keys: ${Object.keys(data).join(', ')}`);
     
-    // Get Git creation time (first commit) and modification time (last commit)
+    // Determine creation and last-modified times using Git history when available.
+    // This works well for deployments (e.g., GitHub Pages) where filesystem
+    // timestamps reflect build time rather than the true content history.
     let fileTime;
+    let gitLastModified = null;
     try {
-      const { execSync } = await import('child_process');
-      // Get the first commit date for this file
-      const gitCreationDate = execSync(
-        `git log --follow --format=%aI --reverse "${filePath}" | head -1`,
-        { encoding: 'utf-8' }
-      ).trim();
-      
-      if (gitCreationDate) {
-        fileTime = new Date(gitCreationDate);
-        console.log(`  - File creation time from Git: ${fileTime}`);
-      } else {
-        // Fallback to file stats if file is not in git or has no commits
+      const { spawnSync } = await import('child_process');
+
+      // Resolve git repository root so we can use a path relative to it.
+      const gitRootRes = spawnSync('git', ['rev-parse', '--show-toplevel'], { encoding: 'utf-8' });
+      const gitRoot = gitRootRes.status === 0 ? gitRootRes.stdout.trim() : null;
+
+      if (gitRoot) {
+        const relPath = path.relative(gitRoot, filePath);
+
+        // Get the first commit (earliest) date for this file. Use --follow to handle renames.
+        const creationRes = spawnSync('git', ['log', '--follow', '--format=%aI', '--reverse', '--', relPath], { encoding: 'utf-8' });
+        const creationOutput = creationRes.status === 0 ? creationRes.stdout.trim() : '';
+        const creationLine = creationOutput.split('\n').find(Boolean) || '';
+
+        // Get last commit date for this file
+        const lastRes = spawnSync('git', ['log', '-1', '--format=%aI', '--', relPath], { encoding: 'utf-8' });
+        const lastOutput = lastRes.status === 0 ? lastRes.stdout.trim() : '';
+
+        if (creationLine) {
+          fileTime = new Date(creationLine);
+          console.log(`  - File creation time from Git (first commit): ${fileTime.toISOString()}`);
+        }
+
+        if (lastOutput) {
+          gitLastModified = new Date(lastOutput).toISOString();
+          console.log(`  - File last-modified time from Git (last commit): ${gitLastModified}`);
+        }
+      }
+
+      // If git info wasn't available, fall back to filesystem timestamps
+      if (!fileTime) {
         const stats = await fs.stat(filePath);
-        fileTime = stats.birthtime;
-        console.log(`  - File creation time from filesystem: ${fileTime}`);
+        // Use the earlier of birthtime and mtime as a reasonable "created" time
+        const fileCreatedTime = stats.birthtime;
+        const fileModifiedTime = stats.mtime;
+        fileTime = new Date(Math.min(fileCreatedTime.getTime(), fileModifiedTime.getTime()));
+        console.log(`  - File creation time from filesystem: ${fileTime.toISOString()}`);
       }
     } catch (error) {
-      // Fallback to file stats if git command fails
-      const stats = await fs.stat(filePath);
-      fileTime = stats.birthtime;
-      console.log(`  - File creation time from filesystem (git failed): ${fileTime}`);
+      // If anything goes wrong with Git, fallback to filesystem stats
+      try {
+        const stats = await fs.stat(filePath);
+        const fileCreatedTime = stats.birthtime;
+        const fileModifiedTime = stats.mtime;
+        fileTime = new Date(Math.min(fileCreatedTime.getTime(), fileModifiedTime.getTime()));
+        console.log(`  - File creation time from filesystem (git failed): ${fileTime.toISOString()}`);
+      } catch (fsErr) {
+        // As a last resort, use now
+        fileTime = new Date();
+        console.log(`  - File creation time fallback to now: ${fileTime.toISOString()}`);
+      }
     }
 
     // Extract title
@@ -137,8 +170,8 @@ async function processMarkdownFile(filePath, usedSlugs) {
       title,
       description: description || '',
       tags: data.tags || [],
-      created: data.created || fileTime.toISOString(),
-      updated: data.updated || new Date().toISOString(),
+  created: data.created || fileTime.toISOString(),
+  updated: data.updated || gitLastModified || new Date().toISOString(),
       path: relativePath,
       url: `/view/${slug}`,
       content: markdownContent
