@@ -1,11 +1,10 @@
 ---
 title: AI Engineering 101 with Chip Huyen
-description: Insights on building successful AI products, engineering strategies, training fundamentals, and organizational challenges.
 tags: [AI Engineering, LLMs, RAG, Evals, Productivity]
-created_at: 2024-05-30
+description: Insights on building successful AI products, engineering strategies, training fundamentals, and organizational challenges.
 markmap:
-  colorFreezeLevel: 3
-  maxWidth: 400
+    colorFreezeLevel: 2
+    maxWidth: 300
 ---
 # AI Engineering 101: Building Successful AI Products & Strategies
 ## Foundations of Successful AI Apps
