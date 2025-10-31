@@ -10,7 +10,6 @@ markmap:
 # Security Evaluation of Backbone LLMs in AI Agents
 
 ## Introduction and Motivation
-
 ### AI Agent Deployment Context
 - Powered by LLMs and deployed at scale
 - Security modeling remains challenging
@@ -26,7 +25,6 @@ markmap:
 - Distinct from broader safety themes such as toxicity or reliability
 
 ## Threat Snapshots Framework
-
 ### Definition and Purpose
 - Formal framework isolating specific states (time $t$) in an agent execution flow
 - Captures concrete instances of LLM vulnerabilities
@@ -46,7 +44,6 @@ markmap:
 - Vulnerabilities often stem from insecure features rather than outright bugs
 
 ## Attack Categorization
-
 ### Vector-Objective Matrix
 - Attack vectors describe delivery methods
   - Direct: attacker appears as a user
@@ -68,7 +65,6 @@ markmap:
 - Denial of AI Service (DAIS)
 
 ## B3 Benchmark Construction
-
 ### Benchmark Foundation
 - Merges threat snapshots with high-quality adapted attacks
 - Evaluates 31 widely used LLMs
@@ -90,7 +86,6 @@ markmap:
 - Represents the average attack score across five repetitions and targeted threat snapshots
 
 ## Experimental Results and Insights
-
 ### Overall Ranking
 - Most secure models: grok-4 (R), grok-4-fast (R), claude-opus-4-1 (R)
 
@@ -113,7 +108,6 @@ markmap:
 - Ranking remains consistent across defense levels ($L_1, L_2, L_3$)
 
 ## Threat Snapshot Examples
-
 ### Cycling Coach ($\text{TS}_{\ell 1}$)
 - Task type: DCE
 - Objective: System prompt extraction
