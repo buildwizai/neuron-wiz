@@ -1,0 +1,124 @@
+# Context Engineering 2.0: The Context of Context Engineering
+## Introduction and Core Concepts
+- Core Definition
+ - Systematic process of designing and optimizing context collection, storage, management, and usage
+ - Goal: Enhance machine understanding and task performance
+- Essence and Motivation
+ - Bridging the cognitive gap between human (carbon-based) and machine (silicon-based) intelligence
+ - Process: Entropy reduction (transforming high-entropy contexts into low-entropy machine representations)
+ - Scope: Connects current prompt engineering to historical HCI frameworks
+- Evolutionary Progression (Stages)
+ - Era 1.0: Primitive Computation (1990s–2020)
+ - Era 2.0: Agent-Centric Intelligence (2020–Present)
+ - Era 3.0: Human-Level Intelligence (Future)
+ - Era 4.0: Superhuman Intelligence (Speculative)
+
+## Theoretical Framework
+- Formal Definition of Context
+ - Entity (E): Users, applications, objects, environments
+ - Characterization (Char(e)): Information describing an entity
+ - Context (C): Aggregation of relevant entity characterizations
+- Formal Definition of Context Engineering (CE)
+ - Process: (C, T) → fcontext (raw context, target task -> context processing function)
+ - Operations (ϕi): Collection, storage, representation, multimodal handling, selection, sharing
+- Stage Characterization
+ - Era 1.0: Primitive Computation - Structured, low-entropy inputs
+ - Era 2.0: Agent-Centric Intelligence - Interprets natural language, handles ambiguity
+ - Era 3.0: Human-Level Intelligence - Senses contexts, assimilates high-entropy information (social cues)
+ - Era 4.0: Superhuman Intelligence - Actively constructs context, uncovers hidden needs
+
+## Historical Evolution
+- Era 1.0: Primitive Computation (1990s–2020)
+ - Machine Intelligence: Passive Executor
+ - Context as: Translation
+ - Interaction Cost: High (humans struggled to adapt to machines)
+ - Technical Background: Ubiquitous computing, context-aware systems, HCI
+ - Core Mechanisms: Sensor fusion, rule triggers
+ - Foundational Principles: Dey's definition of context
+ - Core Practice Example: Context Toolkit (Widgets, Interpreters, Aggregators)
+- Era 2.0: Agent-Centric Intelligence (2020–Present)
+ - Machine Intelligence: Initiative Agent
+ - Context as: Instruction
+ - Interaction Cost: Lower
+ - Technical Background: LLMs, agents, prompt engineering, RAG
+ - Context Modalities: Token sequences, retrieved documents, tool APIs
+ - Context Tolerance: Relatively High (handles ambiguity, natural language)
+ - Shift: From passive sensing (1.0) to active understanding and collaboration
+
+## Design Considerations
+- Context Collection and Storage
+ - Guiding Principles
+  - Minimal Sufficiency Principle (sufficiency, not volume)
+  - Semantic Continuity Principle (continuity of meaning)
+ - Era 2.0 Strategies: Distributed collection; Layered storage architecture (cache, local DBs, cloud)
+ - Long-Term Context: Storing task state/progress (e.g., Claude Code structured notes)
+- Context Management
+ - Textual Context Processing
+  - Mark Context with Timestamp: Preserves order, lacks semantic structure
+  - Tagging Context by Functional Attributes: Organizes by role (goal, action)
+  - Compression with QA Pairs: Improves retrieval efficiency, disrupts flow
+  - Compression with Hierarchical Notes: Tree structure, clear presentation, lacks logical connections
+ - Multi-Modal Context Processing
+  - Strategy 1: Mapping Inputs into Comparable Vector Space
+  - Strategy 2: Combining Modalities for Self-Attention (unified processing)
+  - Strategy 3: Using One Modality to Attend to Another (via cross-attention)
+ - Context Organization
+  - Layered Architecture of Memory: Short-term (high temporal relevance) and Long-term (high importance)
+  - Context Isolation (Subagents): Specialized agents with isolated context windows to reduce pollution
+  - Lightweight References: Storing bulky data externally (sandbox)
+ - Context Abstraction (Self-Baking)
+  - Hierarchical Memory Architectures: Progressively summarized raw context
+  - Add Natural-Language Summaries: Simple/flexible, lacks structure
+  - Extract Key Facts Using a Fixed Schema: Entity maps or event records (e.g., CodeRabbit case file)
+  - Progressively Compress into Meaning Vectors: Compact/flexible, not human-readable
+- Context Usage
+ - Intra-System Context Sharing (Cross-Agent)
+  - Embedding Previous Context into Prompts (e.g., AutoGPT)
+  - Exchanging Structured Messages (predefined schema)
+  - Using Shared Memory (memory blocks, blackboard)
+ - Cross-System Context Sharing
+  - Use Adapters to Convert Context
+  - Using a Shared Representation Across Systems
+   - Shared Data Format (JSON, API)
+   - Human-Readable Summaries
+   - Semantic Vectors (Embeddings)
+ - Context Selection for Understanding
+  - Key Factors: Semantic Relevance, Logical Dependency, Recency and Frequency
+  - Filtering Strategies: Semantic retrieval, Structured retrieval, Reranking
+ - Proactive User Need Inference
+  - Learning and Adapting to User Preferences (analyzing history, building profiles)
+  - Inferring Hidden Goals from Related Questions (sequence analysis, CoT reasoning)
+  - Proactively Offering Help Based on User Struggles
+ - Lifelong Context Challenges
+  - Storage Bottlenecks (need high-compression, low-latency)
+  - Processing Degradation (Attention collapse O(n2))
+  - System Instability (errors spread widely)
+  - Difficulty of Evaluation (lack of relevance/accuracy check)
+ - Emerging Engineering Practices
+  - KV Caching: Storing attention states to improve efficiency (stable prefixes)
+  - Tool Designing: Need precise descriptions, constraint on scale (<30 tools optimal)
+  - Context Contents: Retaining errors for corrective learning
+
+## Applications
+- CLI (e.g., Gemini CLI)
+ - Context File: GEMINI.md (project background, role definitions)
+ - Organization: File system hierarchy (inheritance and isolation)
+ - Management: AI-generated summaries replace long dialogue history
+- Deep Research (e.g., Tongyi DeepResearch)
+ - Process: Multi-round search, extraction, sub-question generation
+ - Management: Periodic compression into "context snapshots" to handle long horizons
+- Brain-Computer Interfaces (BCIs)
+ - Collection: Captures neural signals directly
+ - Advantages: Collects richer dimensions (emotion, cognitive load), reduces explicit user actions
+
+## Challenges and Future Directions
+- Context collection remains limited and inefficient (need for multimodal methods)
+- Storage and management of large-scale context (scalability, organization)
+- Limited model understanding of context (need for stronger semantic reasoning)
+- Performance bottlenecks with long context (O(n2) complexity, need new architectures like Mamba)
+- Selecting relevant and useful context (adaptive filtering)
+- Future Vision: Semantic Operating System for Context
+ - Support large-scale efficient semantic storage
+ - Human-like memory management (adding, modifying, forgetting)
+ - Novel architectures to replace Transformers' flat temporal modeling
+ - Ability to explain itself (tracing, correcting)
