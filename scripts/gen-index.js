@@ -41,6 +41,35 @@ function getUniqueSlug(baseSlug, usedSlugs) {
   return slug;
 }
 
+/**
+ * Normalize list indentation so nested items keep their hierarchy.
+ * Markmap (and CommonMark) expect at least two spaces per depth level.
+ * This ensures any odd indentation (1, 3, etc.) is rounded up so sublists stay nested.
+ * @param {string} markdown
+ * @returns {string}
+ */
+function normalizeListIndentation(markdown) {
+  return markdown
+    .split('\n')
+    .map(line => {
+      const match = line.match(/^(\s+)([-*+]|\d+\.)\s+/);
+      if (!match) return line;
+
+      // Convert tabs to two spaces to keep depth calculations predictable
+      const indentAsSpaces = match[1].replace(/\t/g, '  ');
+      const needsNormalization = indentAsSpaces.length % 2 !== 0;
+      const normalizedIndentLength = needsNormalization
+        ? indentAsSpaces.length + 1
+        : indentAsSpaces.length;
+
+      const normalizedIndent = ' '.repeat(Math.max(2, normalizedIndentLength));
+      const trimmedLine = line.trimStart();
+
+      return `${normalizedIndent}${trimmedLine}`;
+    })
+    .join('\n');
+}
+
 async function processMarkdownFile(filePath, usedSlugs) {
   const relativePath = path.relative(MARKDOWN_DIR, filePath);
   const fileNameWithoutExt = path.basename(filePath, '.md');
@@ -54,6 +83,8 @@ async function processMarkdownFile(filePath, usedSlugs) {
     const { data, content: markdownContent } = matter(content);
     console.log('  - Parsed frontmatter successfully');
     console.log(`    Frontmatter keys: ${Object.keys(data).join(', ')}`);
+
+    const normalizedContent = normalizeListIndentation(markdownContent);
     
     // Determine creation and last-modified times using Git history when available.
     // This works well for deployments (e.g., GitHub Pages) where filesystem
@@ -119,7 +150,7 @@ async function processMarkdownFile(filePath, usedSlugs) {
     let titleSource = 'frontmatter';
     if (!title) {
       // Try to extract from first H1
-      const h1Match = markdownContent.match(/^#\s+(.+)$/m);
+      const h1Match = normalizedContent.match(/^#\s+(.+)$/m);
       if (h1Match) {
         title = h1Match[1].trim();
         titleSource = 'H1 heading';
@@ -135,13 +166,13 @@ async function processMarkdownFile(filePath, usedSlugs) {
     let descriptionSource = 'frontmatter';
     if (!description) {
       // Try to extract the first 3 bullet points
-      const bulletLines = markdownContent.split('\n').filter(line => /^\s*([-*+])\s+/.test(line));
+      const bulletLines = normalizedContent.split('\n').filter(line => /^\s*([-*+])\s+/.test(line));
       if (bulletLines.length > 0) {
         description = bulletLines.slice(0, 3).map(l => l.replace(/^\s*([-*+])\s+/, '')).join(' ');
         descriptionSource = 'bullet points';
       } else {
         // Fallback: first non-heading paragraph
-        const descMatch = markdownContent.replace(/\r/g, '').split(/\n\s*\n/).find(
+        const descMatch = normalizedContent.replace(/\r/g, '').split(/\n\s*\n/).find(
           para => !para.startsWith('#') && para.trim().length > 0
         );
         if (descMatch) {
@@ -174,7 +205,7 @@ async function processMarkdownFile(filePath, usedSlugs) {
   updated: data.updated || gitLastModified || new Date().toISOString(),
       path: relativePath,
       url: `/view/${slug}`,
-      content: markdownContent
+      content: normalizedContent
     };
 
     console.log(`  - Final metadata:`);
